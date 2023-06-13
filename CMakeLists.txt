@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.26)
 project(drawshot VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 qt_standard_project_setup()
 
@@ -11,7 +12,8 @@ qt_add_executable(appdrawshot)
 target_sources(appdrawshot
     PRIVATE
         main.cpp
-        
+        screencapture.h screencapture.cpp
+
     PUBLIC
         
 )
@@ -19,7 +21,9 @@ target_sources(appdrawshot
 qt_add_qml_module(appdrawshot
     URI drawshot
     VERSION 1.0
-    QML_FILES 
+#    SOURCES
+
+    QML_FILES
         Main.qml
 )
 
@@ -37,6 +41,7 @@ set_target_properties(appdrawshot PROPERTIES
 target_link_libraries(appdrawshot
     PRIVATE 
         Qt6::Quick
+        Qt6::Widgets
 )
 
 install(TARGETS appdrawshot
