@@ -15,6 +15,7 @@ target_sources(appdrawshot
         screencapture.h screencapture.cpp
 
     PUBLIC
+        resource.qrc
         
 )
 
@@ -25,6 +26,13 @@ qt_add_qml_module(appdrawshot
 
     QML_FILES
         Main.qml
+        Actions.qml
+        Content.qml
+        LeftContent.qml
+        RightContent.qml
+        LeftTools.qml
+        BottomTools.qml
+        Dialogs.qml
 )
 
 target_compile_features(appdrawshot PRIVATE cxx_std_20)
