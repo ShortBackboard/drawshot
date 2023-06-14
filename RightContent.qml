@@ -105,16 +105,12 @@ Rectangle{
                 editable: true
                 value: 0
                 stepSize: 1
+                to:99
             }
         }
 
 
 
     }
-
-
-
-    //    Button
-    //    CheckBox
 }
 
