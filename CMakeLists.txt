@@ -17,12 +17,14 @@ target_sources(appdrawshot
 
     PUBLIC
         resource.qrc
-        
+
+
 )
 
 qt_add_qml_module(appdrawshot
     URI drawshot
     VERSION 1.0
+
 #    SOURCES
 
     QML_FILES
@@ -49,7 +51,7 @@ set_target_properties(appdrawshot PROPERTIES
 )
 
 target_link_libraries(appdrawshot
-    PRIVATE 
+    PRIVATE
         Qt6::Quick
         Qt6::Widgets
 )

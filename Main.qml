@@ -2,11 +2,10 @@
  *
  * author:2019051604044liChengYang
  *
- * date:2023-6-13
  *
  */
 
-//ScrollArea
+//todo:Loader 和 定时器 timer Component加载提示截图完成
 
 import QtQuick
 import QtQuick.Controls
@@ -30,10 +29,10 @@ ApplicationWindow {
     Rectangle{//工具栏
         id:appToolBar
         width: parent.width
-        height: 30
+        height: 28
         color: "#e6e5e5"
 
-        RowLayout{//stack one
+        RowLayout{
             id:rowAppToolBar
             spacing: (root.width - 7 * 79) / 12
 
@@ -52,30 +51,35 @@ ApplicationWindow {
             ToolButton{
                 id:saveActionButton
                 action:actions.saveAction
+                highlighted: saveActionButton.hovered?true:false
             }
 
             ToolButton{
                 id:saveasActionButton
                 action:actions.saveasAction
+                highlighted: saveasActionButton.hovered?true:false
             }
 
             ToolButton{
                 id:copyActionButton
                 action:actions.copyAction
+                highlighted: copyActionButton.hovered?true:false
             }
 
             ToolButton{
                 id:exportsActionButton
                 action:actions.exportsAction
+                highlighted: exportsActionButton.hovered?true:false
             }
 
             ToolButton{
                 id:showAnnotationToolActionButton
                 action:actions.showAnnotationToolAction
+                highlighted: showAnnotationToolActionButton.hovered?true:false
                 onClicked: {
                     if(showAnnotationToolClickTimes == 0){
                         rightContent.visible = false
-                        leftContent.width = content.width
+                        leftContent.width = content.width - 50
                         leftContent.height = content.height - bottomTools.height
                         rowAppToolBar.spacing = (root.width - 7 * 79) / 22
                         leftRec.height = leftContent.height
@@ -90,6 +94,14 @@ ApplicationWindow {
                         leftContent.x = leftTools.width
                         bottomTools.anchors.bottom = content.anchors.bottom
 
+                        showAnnotationToolActionButton.checked = true
+
+                        //设置滑动条以及缩放
+                        leftRec.enabled = true
+                        imageWheel.enabled = true
+
+                        //切换到绘画界面默认放大图片,移动图片的x,y
+                        shotPreview.scale *= 2.5
 
                         showAnnotationToolClickTimes++;
                     } else {
@@ -113,14 +125,31 @@ ApplicationWindow {
                         leftTools.visible = false
                         bottomTools.visible = false
 
+                        showAnnotationToolActionButton.checked = false
+
+                        //设置滑动条以及缩放
+                        leftRec.enabled = false
+                        imageWheel.enabled = false
+
+                        //返回主界面恢复默认大小
+                        shotPreview.scale /= 2.5
+
                         showAnnotationToolClickTimes--;
                     }
                 }
             }
 
-            ToolButton{action:actions.configureAction}
+            ToolButton{
+                id:configureActionButton
+                action:actions.configureAction
+                highlighted: configureActionButton.hovered?true:false
+            }
 
-            ToolButton{action:actions.aboutAction}
+            ToolButton{
+                id:aboutActionButton
+                action:actions.aboutAction
+                highlighted: aboutActionButton.hovered?true:false
+            }
 
         }
 
@@ -129,9 +158,9 @@ ApplicationWindow {
 
 
     Content{
-        y:30
+        y:37
         id:content
-        height: root.height - appToolBar.height
+        height: root.height - 37
         border.width: 1
         border.color: "#eaeaea"
 
@@ -139,20 +168,37 @@ ApplicationWindow {
             border.width: 1
             border.color: "#eaeaea"
             id:leftContent
-            width: content.width / 3 * 2
+            width: content.width - rightContent.width
             height: content.height
 
-            Rectangle{
+            ScrollView{//可滚动的图片区域
                 id:leftRec
                 width: leftContent.width
                 height: leftContent.height / 4 * 3
                 anchors.centerIn: leftContent
-                color: "grey"
+                enabled: false //初始界面禁止不可滑动
+
+
                 Image {
                     id:shotPreview
-                    anchors.fill: leftRec
+                    width: leftRec.width
+                    height: leftRec.height
                     source:"qrc:/icons/test.png"
+
+                    focus: false
+
+
+                    WheelHandler{//滑轮放大缩小处理
+                        id:imageWheel
+                        enabled: false //初始界面禁止缩放
+                        acceptedModifiers: Qt.ControlModifier //按下controls键才响应滚轮事件
+                        property: "scale" //通过按下ctrl键控制
+                    }
                 }
+
+                //设置滑动条可见性
+                ScrollBar.horizontal.policy:showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
+                ScrollBar.vertical.policy: showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
             }
         }
 
@@ -160,24 +206,15 @@ ApplicationWindow {
             id:rightContent
             border.width: 1
             border.color: "#eaeaea"
-            x:leftContent.width
-            width: parent.width / 3
-            height: parent.height
-
-//            onFullScreen: {
-//                appToolBar.visible = false;
-//                rightContent.visible = false;
-//                footer.visible = false;
-//                leftRec.showFullScreen();
-//                isFullScreen = true;
-//            }
-
+            anchors.right: content.right
+            width: 315
+            height: 500
         }
 
         LeftTools{//左边绘图工具栏
             id:leftTools
             visible: false
-            width: 30
+            width: 40
             height: content.height
             border.width: 2
             border.color: "#d6d6d6"
@@ -191,8 +228,7 @@ ApplicationWindow {
             border.width: 3
             border.color: "#d6d6d6"
             anchors.bottom: content.bottom
-            height: 30
-
+            height: 50
         }
 
 

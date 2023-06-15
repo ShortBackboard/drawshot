@@ -5,5 +5,5 @@ import QtQuick.Controls
 
 Rectangle{
     width: parent.width
-    color:"grey"
+    color: "#f0f0f0"
 }
