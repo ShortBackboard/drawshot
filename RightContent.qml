@@ -3,9 +3,24 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
+import "Functions.js" as Func
 
 Rectangle{
+    signal fullScreen();
+
     color: "#f0f0f0"
+
+    //定时器，用于延时截屏
+    Timer{
+        id: cutTimer
+        interval: 250+spinBox.value*1000
+
+        onTriggered: {
+            shotFullScreen();
+            Func.setPriImgSource();
+            root.visible = true;
+        }
+    }
 
     ColumnLayout{
         x:0;y:0
@@ -17,7 +32,6 @@ Rectangle{
             Text {
                 font.pointSize: 16
                 text: qsTr(" Take a new screenshot")
-
             }
         }
 
@@ -30,12 +44,18 @@ Rectangle{
                 Layout.preferredWidth:250
                 Layout.preferredHeight:30
                 text: "Rectangular Region"
+                onClicked: {
+                    Func.captureScreen();
+                    Func.selectArea();
+                }
+
             }
             Button{
                 id:fullScreenButton
                 Layout.preferredWidth:250
                 Layout.preferredHeight:30
                 text: "Full Screen"
+                onClicked: Func.captureScreen();
             }
             Button{
                 id:activeWindowButton

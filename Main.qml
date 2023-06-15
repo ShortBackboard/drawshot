@@ -11,6 +11,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
+import "Functions.js" as Func
 
 ApplicationWindow {
     id:root
@@ -19,6 +20,10 @@ ApplicationWindow {
     visible: true
 
     title: qsTr("DrawShot")
+
+    property alias priImg: shotPreview
+    property alias selectWin: leftRec
+    property bool isFullScreen: false
 
     property int showAnnotationToolClickTimes: 0
 
@@ -152,12 +157,21 @@ ApplicationWindow {
         }
 
         RightContent{
+            id:rightContent
             border.width: 1
             border.color: "#eaeaea"
-            id:rightContent
             x:leftContent.width
             width: parent.width / 3
             height: parent.height
+
+//            onFullScreen: {
+//                appToolBar.visible = false;
+//                rightContent.visible = false;
+//                footer.visible = false;
+//                leftRec.showFullScreen();
+//                isFullScreen = true;
+//            }
+
         }
 
         LeftTools{//左边绘图工具栏
@@ -192,4 +206,11 @@ ApplicationWindow {
     Dialogs{
         id:dialogs
     }
+
+    //启动软件则截取当前全屏
+    Component.onCompleted: {
+        shotFullScreen();
+        Func.setPriImgSource();
+    }
+
 }

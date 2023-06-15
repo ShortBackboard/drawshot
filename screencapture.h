@@ -9,6 +9,7 @@
 #define SCREENCAPTURE_H
 
 #include <QObject>
+#include "selectimageprovider.h"
 
 class QScreen;
 class QPixmap;
@@ -20,11 +21,18 @@ class ScreenCapture: public QObject
 
 public:
     ScreenCapture(QWidget *parent = 0);
-    //初始设定图片截取后，暂不返回任何指
+    //初始设定图片截取后，暂不返回任何值
     Q_INVOKABLE void shotFullScreen();  //全屏截取
+//    Q_INVOKABLE QPixmap *shotFullScreen();  //全屏截取
+//    Q_INVOKABLE void shotIrregular();   //不规则截图
+
+public:
+    SelectImageProvider *provider;  //图片提供者
+
 private:
     QScreen *m_screen;  //当前屏幕
     QClipboard *m_clipBoard;    //剪贴板
+    QPixmap *m_currentPic;  //当前的截图
 };
 
 #endif // SCREENCAPTURE_H

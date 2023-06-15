@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "screencapture.h"
+#include "selectimageprovider.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,7 +11,8 @@ int main(int argc, char *argv[])
     ScreenCapture sc;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextObject(&sc);
-//    engine.addImageProvider(QLatin1String("pic"), new SelectImageProvider);
+    engine.addImageProvider("mypixmap",sc.provider);
+
     const QUrl url(u"qrc:/drawshot/Main.qml"_qs);
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
         &app, []() { QCoreApplication::exit(-1); },
