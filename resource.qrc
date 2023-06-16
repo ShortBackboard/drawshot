@@ -22,5 +22,6 @@
         <file>icons/mosaic.png</file>
         <file>icons/pen.png</file>
         <file>icons/rect.png</file>
+        <file>SelectWindow.qml</file>
     </qresource>
 </RCC>

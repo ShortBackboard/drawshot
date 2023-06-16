@@ -5,8 +5,6 @@
  *
  */
 
-//todo:Loader 和 定时器 timer Component加载提示截图完成
-
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -21,8 +19,8 @@ ApplicationWindow {
     title: qsTr("DrawShot")
 
     property alias priImg: shotPreview
-    property alias selectWin: leftRec
-    property bool isFullScreen: false
+    property alias priWin: leftRec
+    property alias selectWin: select
 
     property int showAnnotationToolClickTimes: 0
 
@@ -155,7 +153,7 @@ ApplicationWindow {
 
     }
 
-
+    SelectWindow{id: select}
 
     Content{
         y:37
@@ -184,6 +182,7 @@ ApplicationWindow {
                     width: leftRec.width
                     height: leftRec.height
                     source:"qrc:/icons/test.png"
+                    fillMode: Image.PreserveAspectFit   //等比例显示图片
 
                     focus: false
 
@@ -209,6 +208,9 @@ ApplicationWindow {
             anchors.right: content.right
             width: 315
             height: 500
+            onSelectArea: {
+                select.winSelected.showFullScreen()
+            }
         }
 
         LeftTools{//左边绘图工具栏
@@ -230,8 +232,6 @@ ApplicationWindow {
             anchors.bottom: content.bottom
             height: 50
         }
-
-
     }
 
     Actions {

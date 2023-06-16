@@ -6,14 +6,14 @@ import QtQuick.Controls
 import "Functions.js" as Func
 
 Rectangle{
-    signal fullScreen();
+    signal selectArea();
 
     color: "#f0f0f0"
 
     //定时器，用于延时截屏
     Timer{
         id: cutTimer
-        interval: 250+spinBox.value*1000
+        interval: 250
 
         onTriggered: {
             shotFullScreen();
@@ -45,17 +45,28 @@ Rectangle{
                 Layout.preferredHeight:30
                 text: "Rectangular Region"
                 onClicked: {
-                    Func.captureScreen();
-                    Func.selectArea();
+                    root.visible = false;
+                    timer.start();
                 }
-
+                Timer{
+                    id: timer
+                    interval: 250
+                    onTriggered: {
+                        shotFullScreen();
+                        selectArea();   //signal
+                        Func.selectImg();
+                    }
+                }
             }
             Button{
                 id:fullScreenButton
                 Layout.preferredWidth:250
                 Layout.preferredHeight:30
                 text: "Full Screen"
-                onClicked: Func.captureScreen();
+                onClicked: {
+                    priImg.source = ""
+                    Func.captureScreen(spinBox.value*1000)
+                }
             }
             Button{
                 id:activeWindowButton
