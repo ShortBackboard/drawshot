@@ -22,5 +22,7 @@
         <file>icons/mosaic.png</file>
         <file>icons/pen.png</file>
         <file>icons/rect.png</file>
+        <file>icons/drag.png</file>
+        <file>icons/information.png</file>
     </qresource>
 </RCC>

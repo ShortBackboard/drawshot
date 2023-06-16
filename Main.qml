@@ -6,8 +6,6 @@
  */
 
 
-//todo:Loader 和 定时器 timer Component加载提示截图完成
-
 
 import QtQuick
 import QtQuick.Controls
@@ -27,6 +25,90 @@ ApplicationWindow {
     property bool isFullScreen: false
 
     property int showAnnotationToolClickTimes: 0
+    property alias imageMouseAreaControl: imageMouseArea
+    property alias imageTapHandlerControl: imageTapHandler
+
+
+    //启动软件则截取当前全屏
+    //开启定时器和动画效果
+    Component.onCompleted:{
+        hintRecTimer.start()
+        animation.running = true
+        shotFullScreen()
+        Func.setPriImgSource()
+    }
+
+
+    //打开软件自动截图成功提示
+    Rectangle{
+        id:hintRec
+        x:(leftContent.width  - hintRec.width) / 2
+        y:appToolBar.height + 20
+
+        width: 550
+        height: 45
+        color: "#a8c8e5"
+        border.color: "#5185db"
+        opacity: 0.8 //透明
+        z:1
+
+
+        Image {
+            id: hintRecImage
+            width: 18
+            height: 18
+            x:20
+            y: hintRecText.y
+            source: "qrc:/icons/information.png"
+
+        }
+
+        Text {
+            id: hintRecText
+            x:hintRecImage.width + 35
+            y:(hintRec.height - hintRecText.height) / 2
+            text: qsTr("The screenshot has been copied to the clipboard.")
+        }
+
+        RoundButton{
+            id:hintRecButton
+            x:hintRecText.width + hintRecImage.width + 60
+            y:hintRecText.y
+            width: 20
+            height: 20
+            text: "\u2713"
+            onClicked: {
+                hintRec.visible = false
+            }
+        }
+
+
+        //消失动画
+        PropertyAnimation{
+            id:animation
+            target: hintRec
+            property: "opacity"
+            to:0
+            duration: 3000
+            easing.type: Easing.InCirc
+        }
+
+    }
+
+    //提示框计时器
+    Timer{
+        id:hintRecTimer
+        interval: 3000////3s
+        running: false
+        onTriggered: {
+            hintRec.visible = false
+        }
+    }
+
+
+
+
+
 
     Rectangle{//工具栏
         id:appToolBar
@@ -196,6 +278,22 @@ ApplicationWindow {
                         acceptedModifiers: Qt.ControlModifier //按下controls键才响应滚轮事件
                         property: "scale" //通过按下ctrl键控制
                     }
+
+                    MouseArea{//图片区域鼠标样式的改变
+                        id:imageMouseArea
+                        anchors.fill: parent
+
+                        //                        HoverHandler{//鼠标悬浮
+                        //                            cursorShape :Qt.OpenHandCursor
+                        //                        }
+
+                        TapHandler{
+                            id:imageTapHandler
+                            enabled: false //控制是否可以拖动
+                        }
+
+
+                    }
                 }
 
                 //设置滑动条可见性
@@ -243,12 +341,6 @@ ApplicationWindow {
 
     Dialogs{
         id:dialogs
-    }
-
-    //启动软件则截取当前全屏
-    Component.onCompleted: {
-        shotFullScreen();
-        Func.setPriImgSource();
     }
 
 }

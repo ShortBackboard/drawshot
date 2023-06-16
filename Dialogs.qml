@@ -13,6 +13,6 @@ Item{
         buttons: MessageDialog.Ok
 
         title: qsTr("关于")
-        text:qsTr("本软件名为绘截图，由黄睿娴，万鹿宽，李成杨共同开发。\n\n")
+        text:qsTr("本软件名为绘截图，由黄睿娴，万鹿宽，李成杨共同开发。\n\n\n")
     }
 }
