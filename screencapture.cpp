@@ -1,3 +1,7 @@
+/*
+ * author: wanlukuan
+ * date: 2023-6-14
+ */
 #include "screencapture.h"
 
 #include <QGuiApplication>
@@ -22,7 +26,17 @@ void ScreenCapture::shotFullScreen()
     QPixmap screenshot = m_screen->grabWindow(0,0,0,rect.width(),rect.height());
     m_clipBoard = QGuiApplication::clipboard();    //调用系统剪贴板
     m_clipBoard->setPixmap(screenshot);  //保存到剪贴板
-    provider->pixmap = screenshot;  //图片提供者
+    provider->pixmap = screenshot;  //设置图片提供者资源
+    m_currentPic = &screenshot;     //保存当前图片，为支持‘保存’功能
+}
+
+void ScreenCapture::shotFullScreen(int x, int y, int w, int h)
+{
+    m_screen = QGuiApplication::primaryScreen();
+    QPixmap screenshot = m_screen->grabWindow(0,x,y,w,h);
+    m_clipBoard = QGuiApplication::clipboard();    //调用系统剪贴板
+    m_clipBoard->setPixmap(screenshot);  //保存到剪贴板
+    provider->pixmap = screenshot;  //设置图片提供者资源
     m_currentPic = &screenshot;     //保存当前图片，为支持‘保存’功能
 }
 

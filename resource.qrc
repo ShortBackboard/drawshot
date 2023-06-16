@@ -24,5 +24,6 @@
         <file>icons/rect.png</file>
         <file>icons/drag.png</file>
         <file>icons/information.png</file>
+        <file>SelectWindow.qml</file>
     </qresource>
 </RCC>

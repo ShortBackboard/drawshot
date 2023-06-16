@@ -45,6 +45,7 @@ qt_add_qml_module(appdrawshot
         BottomTools.qml
         Dialogs.qml
         Functions.js
+        SelectWindow.qml
 )
 
 target_compile_features(appdrawshot PRIVATE cxx_std_20)

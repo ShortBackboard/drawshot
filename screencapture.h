@@ -23,6 +23,7 @@ public:
     ScreenCapture(QWidget *parent = 0);
     //初始设定图片截取后，暂不返回任何值
     Q_INVOKABLE void shotFullScreen();  //全屏截取
+    Q_INVOKABLE void shotFullScreen(int x,int y,int w,int h);  //指定区域截取
 //    Q_INVOKABLE QPixmap *shotFullScreen();  //全屏截取
 //    Q_INVOKABLE void shotIrregular();   //不规则截图
 
