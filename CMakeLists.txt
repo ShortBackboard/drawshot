@@ -9,11 +9,20 @@ qt_standard_project_setup()
 
 qt_add_executable(appdrawshot)
 
+find_package(Qt6 REQUIRED COMPONENTS Quick)
+target_link_libraries(appdrawshot PRIVATE Qt6::Quick)
+
 target_sources(appdrawshot
     PRIVATE
         main.cpp
         screencapture.h screencapture.cpp
         selectimageprovider.h
+        qsgline.h qsgline.cpp
+        mymaterial.h mymaterial.cpp
+        mygeometry.h mygeometry.cpp
+        mytexture.h mytexture.cpp
+        myshape.h myshape.cpp
+        mymaterialshader.h mymaterialshader.cpp
 
     PUBLIC
         resource.qrc
@@ -54,7 +63,8 @@ target_link_libraries(appdrawshot
     PRIVATE
         Qt6::Quick
         Qt6::Widgets
-)
+        
+        )
 
 install(TARGETS appdrawshot
     BUNDLE DESTINATION .

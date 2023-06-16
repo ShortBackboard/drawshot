@@ -5,7 +5,9 @@
  *
  */
 
+
 //todo:Loader 和 定时器 timer Component加载提示截图完成
+
 
 import QtQuick
 import QtQuick.Controls
