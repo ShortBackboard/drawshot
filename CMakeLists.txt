@@ -17,7 +17,6 @@ target_sources(appdrawshot
         main.cpp
         screencapture.h screencapture.cpp
         selectimageprovider.h
-        qsgline.h qsgline.cpp
         mymaterial.h mymaterial.cpp
         mygeometry.h mygeometry.cpp
         mytexture.h mytexture.cpp

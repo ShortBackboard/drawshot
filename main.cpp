@@ -3,7 +3,6 @@
 #include <QQmlContext>
 #include "screencapture.h"
 #include "selectimageprovider.h"
-#include "qsgline.h"
 #include "myshape.h"
 
 int main(int argc, char *argv[])
