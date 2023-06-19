@@ -339,11 +339,14 @@ ApplicationWindow {
                     id:shotPreview
                     width: leftRec.width
                     height: leftRec.height
-                    //                    source:"qrc:/icons/test.png"
+                    //                                            source:"qrc:/icons/test.png"
 
                     focus: false
                     clip: true
                     fillMode: Image.PreserveAspectFit//图像被均匀缩放以适应而不进行裁剪
+
+
+
                     WheelHandler{//滑轮放大缩小处理
                         id:imageWheel
                         enabled: false //初始界面禁止缩放
@@ -365,8 +368,20 @@ ApplicationWindow {
                         enabled: false//初始界面禁止拖拽
                     }
 
+                    //设置最大最小缩放
+                    onScaleChanged: {
+                        if(shotPreview.scale < 0.8){
+//                            shotPreview.scale = 0.8
+                        }
+
+                        if(shotPreview.scale > 8){
+                            shotPreview.scale = 8
+                        }
+                    }
+
 
                 }
+
 
             }
         }
@@ -399,6 +414,12 @@ ApplicationWindow {
             anchors.bottom: content.bottom
             height: 50
 
+            //绑定设置scale和slider
+            scaleSliderControl.value : shotPreview.scale / 1 * 100
+            scaleSliderControl.onValueChanged: {
+                shotPreview.scale = scaleSliderControl.value / 100
+//                console.log(shotPreview.scale)
+            }
         }
 
 

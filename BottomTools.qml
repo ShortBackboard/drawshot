@@ -8,6 +8,7 @@ import QtQuick.Dialogs
 Rectangle{
     color: "#f0f0f0"
 
+    property alias scaleSliderControl: slider
 
     Label{
         id:labelSize
@@ -60,36 +61,37 @@ Rectangle{
 
 
 //todo:scale Control
-//    Rectangle{
-//        height: parent.height
-//        width: 300
+    Rectangle{
+        height: parent.height
+        width: 300
 //        border.color: "red"
-//        anchors.right: parent.right
-//        Label{
-//            id:labelScael
-//            x:10
-//            y:14
-//            text: "Scale: "
-//        }
+        anchors.right: parent.right
+        Label{
+            id:labelScael
+            x:10
+            y:14
+            text: "Scale: "
+        }
 
-//        Slider{
-//            id:slider
-//            from: 0
-//            to:600
+        Slider{
+            id:slider
+            from: 0
+            to:800 //最大8倍
 //            value: 125
-//            x:65
-//            y:17
+            x:65
+            y:17
 
-//        }
 
-//        Label{
-//            id:scaleLabel
-//            x:230
-//            y:12
-//            text: slider.value.toFixed() +"%"
-//            font.pixelSize: 20
-//        }
-//    }
+        }
+
+        Label{
+            id:scaleLabel
+            x:230
+            y:12
+            text: slider.value.toFixed() +"%"
+            font.pixelSize: 20
+        }
+    }
 
 
 
