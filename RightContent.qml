@@ -19,6 +19,7 @@ Rectangle{
             shotFullScreen();
             Func.setPriImgSource();
             root.visible = true;
+            tipBox.visible = true;
         }
     }
 
@@ -46,15 +47,15 @@ Rectangle{
                 text: "Rectangular Region"
                 onClicked: {
                     root.visible = false;
-                    timer.start();
+                    timer1.start();
                 }
                 Timer{
-                    id: timer
+                    id: timer1
                     interval: 250
                     onTriggered: {
                         shotFullScreen();
                         selectArea();   //signal
-                        Func.selectImg();
+                        Func.setSelectImg();
                     }
                 }
             }
@@ -72,7 +73,20 @@ Rectangle{
                 id:activeWindowButton
                 Layout.preferredWidth:250
                 Layout.preferredHeight:30
-                text: "Active Window"
+                text: "Active Window" 
+                onClicked: {
+                    root.visible = false;
+                    timer2.start();
+                }
+                Timer{
+                    id: timer2
+                    interval: 250
+                    onTriggered: {
+                        shotActiveWin();
+                        Func.setPriImgSource();
+                        root.visible = true;
+                    }
+                }
             }
             Button{
                 id:windowUnderCursorButton

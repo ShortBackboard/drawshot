@@ -17,7 +17,7 @@ Window {
     Image{
         id: selectedImg
         anchors.fill: parent
-        source: ""
+//        source: ""
     }
 
     MouseArea{
@@ -31,20 +31,23 @@ Window {
         property int endY: 0
 
         onPressed: (mouse)=>{
-            startX = mouse.x
-            startY = mouse.y
-            dragRect.visible = true
-            dragRect.focus = true
-        }
+                       startX = mouse.x
+                       startY = mouse.y
+                       dragRect.width = 0
+                       dragRect.height = 0
+                       dragRect.visible = true
+                   }
 
-        onPositionChanged: (mouse)=>{
-            endX = mouse.x
-            endY = mouse.y
-            dragRect.width = Math.abs(endX-startX)
-            dragRect.height = Math.abs(endY-startY)
-            dragRect.x = startX<endX? startX : endX
-            dragRect.y = startY<endY? startY : endY
-        }
+        onPositionChanged:
+            (mouse)=>{
+                endX = mouse.x
+                endY = mouse.y
+                dragRect.width = Math.abs(endX-startX)
+                dragRect.height = Math.abs(endY-startY)
+                dragRect.x = startX<endX? startX : endX
+                dragRect.y = startY<endY? startY : endY
+            }
+
         Rectangle{
             id: dragRect
             color: "transparent"
@@ -55,11 +58,14 @@ Window {
             TapHandler{
                 onDoubleTapped: {
                     Func.cutArea(dragRect.x,dragRect.y,dragRect.width,dragRect.height);
+                    dragRect.visible = false;
                     selectedWin.close();
                     root.visible = true;
                 }
             }
         }
+
+
     }
 
 }
