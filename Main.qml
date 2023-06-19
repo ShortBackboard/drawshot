@@ -36,6 +36,75 @@ ApplicationWindow {
         Func.setPriImgSource()
     }
 
+    //宽度和高度改变时改变Content对应的属性
+    onWidthChanged: {
+        if(showAnnotationToolClickTimes == 1){//绘图界面
+            content.width = root.width
+            content.height = root.height - 37
+
+
+
+            leftContent.width = content.width - bottomTools.height
+            leftContent.height = content.height - bottomTools.height
+
+            leftRec.height = leftContent.height
+            leftRec.width = leftContent.width
+
+            bottomTools.width = content.width - leftTools.width
+            bottomTools.anchors.bottom = content.bottom
+
+
+
+        }else if(showAnnotationToolClickTimes == 0){//初始界面
+            content.width = root.width
+            content.height = root.height - 37
+
+            leftContent.width = content.width - rightContent.width
+            leftContent.height = content.height
+
+            leftRec.width = leftContent.width
+            leftRec.height = leftContent.height / 4 * 3
+
+            leftRec.anchors.centerIn = leftContent
+
+            rightContent.x = leftContent.width
+        }
+    }
+
+    onHeightChanged: {
+        if(showAnnotationToolClickTimes == 1){//绘图界面
+            content.width = root.width
+            content.height = root.height - 37
+
+
+
+            leftContent.width = content.width - bottomTools.height
+            leftContent.height = content.height - bottomTools.height
+
+            leftRec.height = leftContent.height
+            leftRec.width = leftContent.width
+
+            bottomTools.width = content.width - leftTools.width
+            bottomTools.anchors.bottom = content.bottom
+
+
+
+        }else if(showAnnotationToolClickTimes == 0){//初始界面
+            content.width = root.width
+            content.height = root.height - 37
+
+            leftContent.width = content.width - rightContent.width
+            leftContent.height = content.height
+
+            leftRec.width = leftContent.width
+            leftRec.height = leftContent.height / 4 * 3
+
+            leftRec.anchors.centerIn = leftContent
+
+            rightContent.x = leftContent.width
+        }
+    }
+
 
     //打开软件自动截图成功提示
     Rectangle{
@@ -58,7 +127,6 @@ ApplicationWindow {
             x:20
             y: hintRecText.y
             source: "qrc:/icons/information.png"
-
         }
 
         Text {
@@ -196,8 +264,6 @@ ApplicationWindow {
                         rowAppToolBar.spacing = (root.width - 7 * 79) / 12
 
                         rightContent.visible = true
-                        rightContent.width = content.width / 3
-                        rightContent.height = content.height
                         rightContent.x = leftContent.width
 
                         //redo undo 隐藏
@@ -247,9 +313,9 @@ ApplicationWindow {
         border.color: "#eaeaea"
 
         LeftContent{
+            id:leftContent
             border.width: 1
             border.color: "#eaeaea"
-            id:leftContent
             width: content.width - rightContent.width
             height: content.height
 
@@ -281,10 +347,6 @@ ApplicationWindow {
                     MouseArea{//图片区域鼠标样式的改变
                         id:imageMouseArea
                         anchors.fill: parent
-
-                        //                        HoverHandler{//鼠标悬浮
-                        //                            cursorShape :Qt.OpenHandCursor
-                        //                        }
 
                         TapHandler{
                             id:imageTapHandler
