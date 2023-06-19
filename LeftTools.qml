@@ -67,6 +67,7 @@ Rectangle{
             }else{
                 penButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -97,6 +98,7 @@ Rectangle{
             }else{
                 paintButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||penButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -127,6 +129,7 @@ Rectangle{
             }else{
                 lineButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||penButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -157,6 +160,7 @@ Rectangle{
             }else{
                 arrowButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||penButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -187,6 +191,7 @@ Rectangle{
             }else{
                 rectButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||penButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -217,6 +222,7 @@ Rectangle{
             }else{
                 ellipseButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||penButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -247,6 +253,7 @@ Rectangle{
             }else{
                 mosaicButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||penButton.checked||textButton.checked){
                     dragButton.checked = false
@@ -277,6 +284,7 @@ Rectangle{
             }else{
                 textButton.checked = true
                 imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||penButton.checked){
                     dragButton.checked = false

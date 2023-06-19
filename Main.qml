@@ -12,6 +12,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import "Functions.js" as Func
 
+
 ApplicationWindow {
     id:root
     minimumWidth: 945
@@ -26,14 +27,14 @@ ApplicationWindow {
 
     property int showAnnotationToolClickTimes: 0
     property alias imageMouseAreaControl: imageMouseArea
-    property alias imageTapHandlerControl: imageTapHandler
+    property alias imageTapHandlerControl: draghandler
 
 
     //启动软件则截取当前全屏
     //开启定时器和动画效果
     Component.onCompleted:{
         hintRecTimer.start()
-        animation.running = true
+        animationHint.running = true
         shotFullScreen()
         Func.setPriImgSource()
     }
@@ -153,7 +154,7 @@ ApplicationWindow {
 
         //消失动画
         PropertyAnimation{
-            id:animation
+            id:animationHint
             target: hintRec
             property: "opacity"
             to:0
@@ -252,8 +253,10 @@ ApplicationWindow {
                         leftRec.enabled = true
                         imageWheel.enabled = true
 
+
+
                         //切换到绘画界面默认放大图片,移动图片的x,y
-                        shotPreview.scale *= 2.5
+                        shotPreview.scale *= 1.25
 
                         showAnnotationToolClickTimes++;
                     } else {
@@ -282,7 +285,7 @@ ApplicationWindow {
                         imageWheel.enabled = false
 
                         //返回主界面恢复默认大小
-                        shotPreview.scale /= 2.5
+                        shotPreview.scale = 1
 
                         showAnnotationToolClickTimes--;
                     }
@@ -321,46 +324,50 @@ ApplicationWindow {
             width: content.width - rightContent.width
             height: content.height
 
+
             ScrollView{//可滚动的图片区域
                 id:leftRec
+                anchors.leftMargin: 20
                 width: leftContent.width
                 height: leftContent.height / 4 * 3
                 anchors.centerIn: leftContent
                 enabled: false //初始界面禁止不可滑动
+                clip: false
 
 
                 Image {
                     id:shotPreview
                     width: leftRec.width
                     height: leftRec.height
-                    source:"qrc:/icons/test.png"
+                    //                    source:"qrc:/icons/test.png"
 
                     focus: false
-
-
+                    clip: true
+                    fillMode: Image.PreserveAspectFit//图像被均匀缩放以适应而不进行裁剪
                     WheelHandler{//滑轮放大缩小处理
                         id:imageWheel
                         enabled: false //初始界面禁止缩放
                         acceptedModifiers: Qt.ControlModifier //按下controls键才响应滚轮事件
                         property: "scale" //通过按下ctrl键控制
+                        //                                                onWheel: {
+                        //                            //                        shotPreview.scale += 0.1
+                        //                            //                        console.log(shotPreview.scale)
+                        //                                                }
                     }
 
                     MouseArea{//图片区域鼠标样式的改变
                         id:imageMouseArea
                         anchors.fill: parent
-
-                        TapHandler{
-                            id:imageTapHandler
-                            enabled: false //控制是否可以拖动
-                        }
-
-
                     }
+
+                    DragHandler{//设置可拖拽
+                        id: draghandler
+                        enabled: false//初始界面禁止拖拽
+                    }
+
+
                 }
 
-                //设置滑动条可见性
-                ScrollBar.horizontal.policy:showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
-                ScrollBar.vertical.policy: showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
             }
         }
 
@@ -391,6 +398,7 @@ ApplicationWindow {
             border.color: "#d6d6d6"
             anchors.bottom: content.bottom
             height: 50
+
         }
 
 
@@ -404,5 +412,7 @@ ApplicationWindow {
     Dialogs{
         id:dialogs
     }
+
+
 
 }

@@ -2,8 +2,14 @@ cmake_minimum_required(VERSION 3.26)
 
 project(drawshot VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOUIC ON)
+
+
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_standard_project_setup()
 
@@ -14,17 +20,17 @@ target_link_libraries(appdrawshot PRIVATE Qt6::Quick)
 
 target_sources(appdrawshot
     PRIVATE
-        main.cpp
-        screencapture.h screencapture.cpp
-        selectimageprovider.h
-        mymaterial.h mymaterial.cpp
-        mygeometry.h mygeometry.cpp
-        mytexture.h mytexture.cpp
-        myshape.h myshape.cpp
-        mymaterialshader.h mymaterialshader.cpp
+    main.cpp
+    screencapture.h screencapture.cpp
+    selectimageprovider.h
+    mymaterial.h mymaterial.cpp
+    mygeometry.h mygeometry.cpp
+    mytexture.h mytexture.cpp
+    myshape.h myshape.cpp
+    mymaterialshader.h mymaterialshader.cpp
 
     PUBLIC
-        resource.qrc
+    resource.qrc
 
 
 )
@@ -33,18 +39,18 @@ qt_add_qml_module(appdrawshot
     URI drawshot
     VERSION 1.0
 
-#    SOURCES
+    #    SOURCES
 
     QML_FILES
-        Main.qml
-        Actions.qml
-        Content.qml
-        LeftContent.qml
-        RightContent.qml
-        LeftTools.qml
-        BottomTools.qml
-        Dialogs.qml
-        Functions.js
+    Main.qml
+    Actions.qml
+    Content.qml
+    LeftContent.qml
+    RightContent.qml
+    LeftTools.qml
+    BottomTools.qml
+    Dialogs.qml
+    Functions.js
 )
 
 target_compile_features(appdrawshot PRIVATE cxx_std_20)
@@ -60,10 +66,10 @@ set_target_properties(appdrawshot PROPERTIES
 
 target_link_libraries(appdrawshot
     PRIVATE
-        Qt6::Quick
-        Qt6::Widgets
-        
-        )
+    Qt6::Quick
+    Qt6::Widgets
+
+)
 
 install(TARGETS appdrawshot
     BUNDLE DESTINATION .
@@ -72,8 +78,8 @@ install(TARGETS appdrawshot
 )
 
 
-
-
+target_link_libraries(appdrawshot PRIVATE Qt6::Widgets)
+target_link_libraries(appdrawshot PRIVATE Qt6::Core)
 
 
 
