@@ -4,29 +4,26 @@ project(drawshot VERSION 0.1 LANGUAGES CXX)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
+find_package(X11 REQUIRED)
 
 qt_standard_project_setup()
 
 qt_add_executable(appdrawshot)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
+include_directories(${X11_INCLUDE_DIR})
+link_directories(${X11_LIB_DIR})
 target_link_libraries(appdrawshot PRIVATE Qt6::Quick)
+target_link_libraries(appdrawshot PRIVATE ${X11_LIBRARIES})
 
 target_sources(appdrawshot
     PRIVATE
         main.cpp
         screencapture.h screencapture.cpp
         selectimageprovider.h
-        mymaterial.h mymaterial.cpp
-        mygeometry.h mygeometry.cpp
-        mytexture.h mytexture.cpp
-        myshape.h myshape.cpp
-        mymaterialshader.h mymaterialshader.cpp
 
     PUBLIC
         resource.qrc
-
-
 )
 
 qt_add_qml_module(appdrawshot
@@ -63,7 +60,7 @@ target_link_libraries(appdrawshot
     PRIVATE
         Qt6::Quick
         Qt6::Widgets
-        
+        ${X11_LIBRARIES}
         )
 
 install(TARGETS appdrawshot

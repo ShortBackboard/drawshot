@@ -18,7 +18,7 @@ function cutArea(x,y,w,h){
 }
 
 //加载备截取截图
-function selectImg(){
+function setSelectImg(){
     selectWin.sImg.source = ""
     selectWin.sImg.source = "image://mypixmap/"+Math.random()
 }

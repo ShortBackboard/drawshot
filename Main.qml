@@ -21,6 +21,7 @@ ApplicationWindow {
     property alias priImg: shotPreview
     property alias priWin: leftRec
     property alias selectWin: select
+    property alias tipBox: hintRec
 
     property int showAnnotationToolClickTimes: 0
     property alias imageMouseAreaControl: imageMouseArea
@@ -30,10 +31,10 @@ ApplicationWindow {
     //启动软件则截取当前全屏
     //开启定时器和动画效果
     Component.onCompleted:{
-        hintRecTimer.start()
-        animation.running = true
         shotFullScreen()
         Func.setPriImgSource()
+        hintRecTimer.start()
+        animation.running = true
     }
 
     //宽度和高度改变时改变Content对应的属性
@@ -105,6 +106,7 @@ ApplicationWindow {
         }
     }
 
+    onActiveChanged: setActiveWinId();  //保存活动窗口ID
 
     //打开软件自动截图成功提示
     Rectangle{
@@ -138,7 +140,7 @@ ApplicationWindow {
 
         RoundButton{
             id:hintRecButton
-            x:hintRecText.width + hintRecImage.width + 60
+            x: hintRec.width-30
             y:hintRecText.y
             width: 20
             height: 20
@@ -164,17 +166,12 @@ ApplicationWindow {
     //提示框计时器
     Timer{
         id:hintRecTimer
-        interval: 3000////3s
+        interval: 5000////3s
         running: false
         onTriggered: {
             hintRec.visible = false
         }
     }
-
-
-
-
-
 
     Rectangle{//工具栏
         id:appToolBar
@@ -352,8 +349,6 @@ ApplicationWindow {
                             id:imageTapHandler
                             enabled: false //控制是否可以拖动
                         }
-
-
                     }
                 }
 
@@ -371,6 +366,7 @@ ApplicationWindow {
             width: 315
             height: 500
             onSelectArea: {
+                select.winSelected.visible = true;
                 select.winSelected.showFullScreen()
             }
         }

@@ -13,6 +13,10 @@
 #include <QBrush>
 #include <QPainterPath>
 #include <QDebug>
+#include <QMainWindow>
+#include <QApplication>
+#include <X11/Xlib.h>
+#include <QWindow>
 
 ScreenCapture::ScreenCapture(QWidget *parent)
     :provider(new SelectImageProvider)
@@ -39,6 +43,28 @@ void ScreenCapture::shotFullScreen(int x, int y, int w, int h)
     provider->pixmap = screenshot;  //设置图片提供者资源
     m_currentPic = &screenshot;     //保存当前图片，为支持‘保存’功能
 }
+
+void ScreenCapture::shotActiveWin()
+{
+    m_screen = QGuiApplication::primaryScreen();
+    QPixmap pixmap = m_screen->grabWindow(winId);
+    m_clipBoard = QGuiApplication::clipboard();    //调用系统剪贴板
+    m_clipBoard->setPixmap(pixmap);  //保存到剪贴板
+    provider->pixmap = pixmap;  //设置图片提供者资源
+}
+
+//获取系统活动窗口ID并保存
+void ScreenCapture::setActiveWinId()
+{
+    Display *display = XOpenDisplay(nullptr);
+    Window focusWindow;
+    int reverTo;
+    XGetInputFocus(display,&focusWindow,&reverTo);
+    winId = (WId)focusWindow;
+
+    XCloseDisplay(display);
+}
+
 
 //自由不规则区域截取，测试。。。
 //void ScreenCapture::shotIrregular()
