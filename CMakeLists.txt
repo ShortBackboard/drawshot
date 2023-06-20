@@ -2,9 +2,15 @@ cmake_minimum_required(VERSION 3.26)
 
 project(drawshot VERSION 0.1 LANGUAGES CXX)
 
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_AUTOUIC ON)
+
+
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(X11 REQUIRED)
+
 
 qt_standard_project_setup()
 
@@ -24,13 +30,14 @@ target_sources(appdrawshot
 
     PUBLIC
         resource.qrc
+
 )
 
 qt_add_qml_module(appdrawshot
     URI drawshot
     VERSION 1.0
 
-#    SOURCES
+    #    SOURCES
 
     QML_FILES
         Main.qml
@@ -43,6 +50,7 @@ qt_add_qml_module(appdrawshot
         Dialogs.qml
         Functions.js
         SelectWindow.qml
+
 )
 
 target_compile_features(appdrawshot PRIVATE cxx_std_20)
@@ -63,6 +71,7 @@ target_link_libraries(appdrawshot
         ${X11_LIBRARIES}
         )
 
+
 install(TARGETS appdrawshot
     BUNDLE DESTINATION .
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
@@ -70,8 +79,8 @@ install(TARGETS appdrawshot
 )
 
 
-
-
+target_link_libraries(appdrawshot PRIVATE Qt6::Widgets)
+target_link_libraries(appdrawshot PRIVATE Qt6::Core)
 
 
 

@@ -10,6 +10,7 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import "Functions.js" as Func
 
+
 ApplicationWindow {
     id:root
     minimumWidth: 945
@@ -25,12 +26,14 @@ ApplicationWindow {
 
     property int showAnnotationToolClickTimes: 0
     property alias imageMouseAreaControl: imageMouseArea
-    property alias imageTapHandlerControl: imageTapHandler
+    property alias imageTapHandlerControl: draghandler
 
 
     //启动软件则截取当前全屏
     //开启定时器和动画效果
     Component.onCompleted:{
+        hintRecTimer.start()
+        animationHint.running = true
         shotFullScreen()
         Func.setPriImgSource()
         hintRecTimer.start()
@@ -153,7 +156,7 @@ ApplicationWindow {
 
         //消失动画
         PropertyAnimation{
-            id:animation
+            id:animationHint
             target: hintRec
             property: "opacity"
             to:0
@@ -232,6 +235,7 @@ ApplicationWindow {
                         leftRec.height = leftContent.height
                         leftRec.width = leftContent.width
 
+
                         //redo undo 显示
                         undoActionButton.visible = true
                         redoActionButton.visible = true
@@ -247,8 +251,10 @@ ApplicationWindow {
                         leftRec.enabled = true
                         imageWheel.enabled = true
 
+
+
                         //切换到绘画界面默认放大图片,移动图片的x,y
-                        shotPreview.scale *= 2.5
+                        shotPreview.scale *= 1.25
 
                         showAnnotationToolClickTimes++;
                     } else {
@@ -277,7 +283,7 @@ ApplicationWindow {
                         imageWheel.enabled = false
 
                         //返回主界面恢复默认大小
-                        shotPreview.scale /= 2.5
+                        shotPreview.scale = 1
 
                         showAnnotationToolClickTimes--;
                     }
@@ -316,12 +322,15 @@ ApplicationWindow {
             width: content.width - rightContent.width
             height: content.height
 
+
             ScrollView{//可滚动的图片区域
                 id:leftRec
+                anchors.leftMargin: 20
                 width: leftContent.width
                 height: leftContent.height / 4 * 3
                 anchors.centerIn: leftContent
                 enabled: false //初始界面禁止不可滑动
+                clip: false
 
 
                 Image {
@@ -330,8 +339,13 @@ ApplicationWindow {
                     height: leftRec.height
                     source:"qrc:/icons/test.png"
                     fillMode: Image.PreserveAspectFit   //等比例显示图片
+                    anchors.fill: parent
+
+                    //                                            source:"qrc:/icons/test.png"
 
                     focus: false
+                    clip: true
+
 
 
                     WheelHandler{//滑轮放大缩小处理
@@ -344,17 +358,28 @@ ApplicationWindow {
                     MouseArea{//图片区域鼠标样式的改变
                         id:imageMouseArea
                         anchors.fill: parent
+                    }
 
-                        TapHandler{
-                            id:imageTapHandler
-                            enabled: false //控制是否可以拖动
+                    DragHandler{//设置可拖拽
+                        id: draghandler
+                        enabled: false//初始界面禁止拖拽
+                    }
+
+                    //设置最大最小缩放
+                    onScaleChanged: {
+                        if(shotPreview.scale < 0.55){
+                            shotPreview.scale = 0.55
+                        }
+
+                        if(shotPreview.scale > 8){
+                            shotPreview.scale = 8
                         }
                     }
+
+
                 }
 
-                //设置滑动条可见性
-                ScrollBar.horizontal.policy:showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
-                ScrollBar.vertical.policy: showAnnotationToolClickTimes == 0 ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
+
             }
         }
 
@@ -389,6 +414,13 @@ ApplicationWindow {
             border.color: "#d6d6d6"
             anchors.bottom: content.bottom
             height: 50
+
+            //绑定设置scale和slider
+            scaleSliderControl.value : shotPreview.scale / 1 * 100
+            scaleSliderControl.onValueChanged: {
+                shotPreview.scale = scaleSliderControl.value / 100
+                //                console.log(shotPreview.scale)
+            }
         }
     }
 
@@ -400,5 +432,7 @@ ApplicationWindow {
     Dialogs{
         id:dialogs
     }
+
+
 
 }
