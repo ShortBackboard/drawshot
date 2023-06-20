@@ -37,7 +37,6 @@ ApplicationWindow {
         shotFullScreen()
         Func.setPriImgSource()
         hintRecTimer.start()
-        animation.running = true
     }
 
     //宽度和高度改变时改变Content对应的属性
@@ -204,16 +203,22 @@ ApplicationWindow {
                 highlighted: saveActionButton.hovered?true:false
             }
 
-            ToolButton{
+            ToolButton{//另存为
                 id:saveasActionButton
                 action:actions.saveasAction
                 highlighted: saveasActionButton.hovered?true:false
+                onClicked: ()=>{
+                               dialogs.saveAsFileDialog()
+                           }
             }
 
-            ToolButton{
-                id:copyActionButton
-                action:actions.copyAction
-                highlighted: copyActionButton.hovered?true:false
+            ToolButton{//打开本地图片
+                id:openActionButton
+                action:actions.openAction
+                highlighted: openActionButton.hovered?true:false
+                onClicked: ()=>{
+                               dialogs.openFileDialog()
+                           }
             }
 
             ToolButton{
@@ -315,6 +320,13 @@ ApplicationWindow {
         border.width: 1
         border.color: "#eaeaea"
 
+        //选择图片
+        function selectImage() {
+            shotPreview.source = arguments[0]
+        }
+
+
+
         LeftContent{
             id:leftContent
             border.width: 1
@@ -335,8 +347,8 @@ ApplicationWindow {
 
                 Image {
                     id:shotPreview
-                    width: leftRec.width
-                    height: leftRec.height
+//                    width: leftRec.width
+//                    height: leftRec.height
                     source:"qrc:/icons/test.png"
                     fillMode: Image.PreserveAspectFit   //等比例显示图片
                     anchors.fill: parent
@@ -431,6 +443,16 @@ ApplicationWindow {
 
     Dialogs{
         id:dialogs
+        fileOpenDialog.onAccepted: {//打开文件
+            content.selectImage(fileOpenDialog.selectedFile)
+        }
+
+        fileSaveAsDialog.onAccepted: {//另存为
+            console.log(fileSaveAsDialog.selectedFile)
+           shotPreview.grabToImage(function(result) { //另外为的图片大小默认和shotPreview大小一致
+               result.saveToFile(fileSaveAsDialog.selectedFile)
+           } )
+      }
     }
 
 

@@ -6,7 +6,7 @@ import QtQuick.Controls
 Item {
     property alias saveAction: save
     property alias saveasAction: saveAs
-    property alias copyAction: copy
+    property alias openAction: open
     property alias exportsAction: exports
     property alias showAnnotationToolAction: showAnnotationTool
     property alias configureAction: configure
@@ -27,8 +27,8 @@ Item {
     }
 
     Action{
-        id:copy
-        text:qsTr("Copy")
+        id:open
+        text:qsTr("Open")
         icon.source: "qrc:/icons/copy.png"
     }
 
