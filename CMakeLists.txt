@@ -23,11 +23,6 @@ target_sources(appdrawshot
     main.cpp
     screencapture.h screencapture.cpp
     selectimageprovider.h
-    mymaterial.h mymaterial.cpp
-    mygeometry.h mygeometry.cpp
-    mytexture.h mytexture.cpp
-    myshape.h myshape.cpp
-    mymaterialshader.h mymaterialshader.cpp
 
     PUBLIC
     resource.qrc

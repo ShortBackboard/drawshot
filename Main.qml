@@ -238,6 +238,7 @@ ApplicationWindow {
                         leftRec.height = leftContent.height
                         leftRec.width = leftContent.width
 
+
                         //redo undo 显示
                         undoActionButton.visible = true
                         redoActionButton.visible = true
@@ -337,8 +338,8 @@ ApplicationWindow {
 
                 Image {
                     id:shotPreview
-                    width: leftRec.width
-                    height: leftRec.height
+                    anchors.fill: parent
+
                     //                                            source:"qrc:/icons/test.png"
 
                     focus: false
@@ -370,8 +371,8 @@ ApplicationWindow {
 
                     //设置最大最小缩放
                     onScaleChanged: {
-                        if(shotPreview.scale < 0.8){
-//                            shotPreview.scale = 0.8
+                        if(shotPreview.scale < 0.55){
+                            shotPreview.scale = 0.55
                         }
 
                         if(shotPreview.scale > 8){
