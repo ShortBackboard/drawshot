@@ -222,9 +222,50 @@ ApplicationWindow {
             }
 
             ToolButton{
-                id:exportsActionButton
+                id:exportsActionButton//扩展按钮
                 action:actions.exportsAction
                 highlighted: exportsActionButton.hovered?true:false
+                onClicked: menuExport.popup(0,30)//点击显示
+                Menu{
+                    id:menuExport
+                    Menu{
+                        title: qsTr("Share")
+                        MenuItem{
+                            id:qq
+                            text: qsTr("Send to QQ")
+                            icon.source: "qrc:/icons/qq.png"
+                            onTriggered: {
+                                share.shareToQQ()
+                            }
+//                            Shortcut {
+//                                sequence: "Ctrl+Shift+Q"
+//                                onActivated: qq.triggered()
+//                            }
+                        }
+
+                        MenuItem{
+                            id:wexin
+                            text: qsTr("Send to WeChat")
+                            icon.source: "qrc:/icons/wexin.png"
+                            onTriggered: {
+                                share.shareToWeXin()
+                            }
+                        }
+                    }
+
+                    Menu{
+                        title: qsTr("More")
+                        MenuItem{
+                            id:recoder
+                            text: qsTr("Area Screenrecord")
+                            icon.source: "qrc:/icons/record.png"
+                            onTriggered: {
+                                arearecort.show();
+                            }
+                        }
+                    }
+                }
+
             }
 
             ToolButton{
@@ -347,8 +388,8 @@ ApplicationWindow {
 
                 Image {
                     id:shotPreview
-//                    width: leftRec.width
-//                    height: leftRec.height
+                    //                    width: leftRec.width
+                    //                    height: leftRec.height
                     source:"qrc:/icons/test.png"
                     fillMode: Image.PreserveAspectFit   //等比例显示图片
                     anchors.fill: parent
@@ -449,10 +490,10 @@ ApplicationWindow {
 
         fileSaveAsDialog.onAccepted: {//另存为
             console.log(fileSaveAsDialog.selectedFile)
-           shotPreview.grabToImage(function(result) { //另外为的图片大小默认和shotPreview大小一致
-               result.saveToFile(fileSaveAsDialog.selectedFile)
-           } )
-      }
+            shotPreview.grabToImage(function(result) { //另外为的图片大小默认和shotPreview大小一致
+                result.saveToFile(fileSaveAsDialog.selectedFile)
+            } )
+        }
     }
 
 

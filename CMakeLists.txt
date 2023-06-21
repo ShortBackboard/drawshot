@@ -27,6 +27,8 @@ target_sources(appdrawshot
         main.cpp
         screencapture.h screencapture.cpp
         selectimageprovider.h
+        share.h share.cpp
+        arearecord.h    arearecord.cpp
 
     PUBLIC
         resource.qrc
