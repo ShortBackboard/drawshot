@@ -554,6 +554,7 @@ ApplicationWindow {
     Actions {
         id:actions
         aboutAction.onTriggered: dialogs.openAboutDialog()
+        saveAction.onTriggered: saveImg();
     }
 
     Dialogs{

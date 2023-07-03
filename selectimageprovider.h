@@ -20,7 +20,6 @@ public:
 
     QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override
     {
-
         QImage image = pixmap.toImage();
         *size = image.size();
         return image;
