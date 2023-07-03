@@ -27,6 +27,10 @@ target_sources(appdrawshot
         main.cpp
         screencapture.h screencapture.cpp
         selectimageprovider.h
+        paintitems.h    paintitems.cpp
+        elementgroup.h  elementgroup.cpp
+        copypaintiitems.h copypaintiitems.cpp
+
 
     PUBLIC
         resource.qrc

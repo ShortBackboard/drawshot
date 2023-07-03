@@ -8,11 +8,12 @@ Rectangle{
 
     property alias dragTool: dragButton
     property alias penTool: penButton
-    property alias paintTool: paintButton
+    property alias earseTool: earseButton
     property alias lineTool: lineButton
     property alias arrowTool: arrowButton
     property alias rectTool: rectButton
     property alias ellipseTool: ellipseButton
+    property alias mosaicTool: mosaicButton
     property alias textTool: textButton
 
 
@@ -30,17 +31,17 @@ Rectangle{
         onClicked: {
             if(dragButton.checked){
                 dragButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
                 imageTapHandlerControl.enabled = false
 
             }else{
                 dragButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.OpenHandCursor
+//                imageMouseAreaControl.cursorShape = Qt.OpenHandCursor
                 imageTapHandlerControl.enabled = true
 
-                if(penButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
+                if(penButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     penButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false
@@ -63,15 +64,15 @@ Rectangle{
         onClicked: {
             if(penButton.checked){
                 penButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 penButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false
@@ -84,20 +85,20 @@ Rectangle{
     }
 
     Button{
-        id:paintButton
+        id:earseButton
         x:5
         y:5 + 2 * 35
         icon.source: "qrc:/icons/paint.png"
         width: 30
         height: 30
-        highlighted: paintButton.hovered?true:false
+        highlighted: earseButton.hovered?true:false
         onClicked: {
-            if(paintButton.checked){
-                paintButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+            if(earseButton.checked){
+                earseButton.checked = false
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
-                paintButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+                earseButton.checked = true
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
                 if(dragButton.checked||penButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
@@ -125,15 +126,15 @@ Rectangle{
         onClicked: {
             if(lineButton.checked){
                 lineButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 lineButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||penButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||penButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     penButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false
@@ -156,15 +157,15 @@ Rectangle{
         onClicked: {
             if(arrowButton.checked){
                 arrowButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 arrowButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||penButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||penButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     penButton.checked = false
                     rectButton.checked = false
@@ -187,15 +188,15 @@ Rectangle{
         onClicked: {
             if(rectButton.checked){
                 rectButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 rectButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||penButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||penButton.checked||ellipseButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     penButton.checked = false
@@ -218,15 +219,15 @@ Rectangle{
         onClicked: {
             if(ellipseButton.checked){
                 ellipseButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 ellipseButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||penButton.checked||mosaicButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||penButton.checked||mosaicButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false
@@ -249,15 +250,15 @@ Rectangle{
         onClicked: {
             if(mosaicButton.checked){
                 mosaicButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 mosaicButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||penButton.checked||textButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||penButton.checked||textButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false
@@ -280,15 +281,15 @@ Rectangle{
         onClicked: {
             if(textButton.checked){
                 textButton.checked = false
-                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
+//                imageMouseAreaControl.cursorShape = Qt.ArrowCursor
             }else{
                 textButton.checked = true
-                imageMouseAreaControl.cursorShape = Qt.CrossCursor
+//                imageMouseAreaControl.cursorShape = Qt.CrossCursor
                 imageTapHandlerControl.enabled = false
 
-                if(dragButton.checked||paintButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||penButton.checked){
+                if(dragButton.checked||earseButton.checked||lineButton.checked||arrowButton.checked||rectButton.checked||ellipseButton.checked||mosaicButton.checked||penButton.checked){
                     dragButton.checked = false
-                    paintButton.checked = false
+                    earseButton.checked = false
                     lineButton.checked = false
                     arrowButton.checked = false
                     rectButton.checked = false

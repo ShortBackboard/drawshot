@@ -9,7 +9,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "Functions.js" as Func
-
+import qml.Component 1.0
 
 ApplicationWindow {
     id:root
@@ -24,10 +24,10 @@ ApplicationWindow {
     property alias selectWin: select
     property alias tipBox: hintRec
 
-    property int showAnnotationToolClickTimes: 0
-    property alias imageMouseAreaControl: imageMouseArea
-    property alias imageTapHandlerControl: draghandler
 
+    property int showAnnotationToolClickTimes: 0
+    //    property alias imageMouseAreaControl: imageMouseArea
+    property alias imageTapHandlerControl: draghandler
 
     //启动软件则截取当前全屏
     //开启定时器和动画效果
@@ -37,7 +37,7 @@ ApplicationWindow {
         shotFullScreen()
         Func.setPriImgSource()
         hintRecTimer.start()
-        animation.running = true
+
     }
 
     //宽度和高度改变时改变Content对应的属性
@@ -56,7 +56,8 @@ ApplicationWindow {
 
             bottomTools.width = content.width - leftTools.width
             bottomTools.anchors.bottom = content.bottom
-
+            //更新图像绘画
+            painter.update();
 
 
         }else if(showAnnotationToolClickTimes == 0){//初始界面
@@ -77,7 +78,7 @@ ApplicationWindow {
 
     onHeightChanged: {
         if(showAnnotationToolClickTimes == 1){//绘图界面
-            content.width = root.width
+            content.width = root.widsaveActionth
             content.height = root.height - 37
 
 
@@ -253,8 +254,8 @@ ApplicationWindow {
 
 
 
-                        //切换到绘画界面默认放大图片,移动图片的x,y
-                        shotPreview.scale *= 1.25
+                        //切换到绘画界面默认放大图片,移动图片的x,y]
+                        shotPreview.scale *= 1
 
                         showAnnotationToolClickTimes++;
                     } else {
@@ -325,41 +326,27 @@ ApplicationWindow {
 
             ScrollView{//可滚动的图片区域
                 id:leftRec
-                anchors.leftMargin: 20
-                width: leftContent.width
-                height: leftContent.height / 4 * 3
-                anchors.centerIn: leftContent
                 enabled: false //初始界面禁止不可滑动
                 clip: false
-
-
                 Image {
                     id:shotPreview
-                    width: leftRec.width
-                    height: leftRec.height
+                    anchors.fill: parent
                     source:"qrc:/icons/test.png"
                     fillMode: Image.PreserveAspectFit   //等比例显示图片
-                    anchors.fill: parent
-
-                    //                                            source:"qrc:/icons/test.png"
-
                     focus: false
                     clip: true
-
-
-
                     WheelHandler{//滑轮放大缩小处理
                         id:imageWheel
                         enabled: false //初始界面禁止缩放
                         acceptedModifiers: Qt.ControlModifier //按下controls键才响应滚轮事件
                         property: "scale" //通过按下ctrl键控制
+                        onWheel: {
+                            console.log("wheel" +painter.width,painter.height);
+                            console.log("true"+shotPreview.scale);
+                            console.log("true"+painter.changedScale);
+                            painter.update();
+                        }
                     }
-
-                    MouseArea{//图片区域鼠标样式的改变
-                        id:imageMouseArea
-                        anchors.fill: parent
-                    }
-
                     DragHandler{//设置可拖拽
                         id: draghandler
                         enabled: false//初始界面禁止拖拽
@@ -376,9 +363,57 @@ ApplicationWindow {
                         }
                     }
 
+                }
+                PaintedItem{
+                    property bool textSignal: false
+
+                    id: painter
+                    anchors.centerIn: shotPreview
+//                    m_width: shotPreview.width
+//                    m_height:shotPreview.height
+
+
+                    width: shotPreview.width*shotPreview.scale
+                    height: shotPreview.height*shotPreview.scale
+//                    display_width: shotPreview.width*shotPreview.scale
+//                    display_height: shotPreview.height*shotPreview.scale
+                    changedScale:1*shotPreview.scale
+
+
+
+                    Rectangle {
+                        FocusScope {
+                            id:textarea
+                            width: painter.s_width
+                            height: painter.s_height
+                            x:painter.s_textPoint.x
+                            y:painter.s_textPoint.y
+                            visible:painter.textEditStatus;
+                            Rectangle {
+                                color: "transparent"
+                                anchors.fill: parent
+                            }
+                            TextEdit {
+                                id: input
+                                anchors.fill: parent
+                                anchors.margins: 4
+                                text: "ctrl+S保存"
+                                focus: true
+                                Keys.onPressed:function(event){
+                                    if (event.modifiers == Qt.ControlModifier && event.key == Qt.Key_S)
+                                    {
+                                        painter.finishGetTextString(0,1,input.text,input.font.pixelSize);
+                                        backInputInitialStatus();
+                                    }
+                                }
+                            }
+
+                        }
+
+                    }
+
 
                 }
-
 
             }
         }
@@ -403,6 +438,48 @@ ApplicationWindow {
             height: content.height
             border.width: 2
             border.color: "#d6d6d6"
+            //直线
+            lineTool.onClicked: {
+                painter.currentGraphical=1;
+                //                painter.m_bEnabled=true;
+                console.log("linecurrentGraphical:"+painter.currentGraphical)
+                //                console.log("line:"+painter.m_bEnabled)
+            }
+            //涂鸦
+            penTool.onClicked: {
+                painter.currentGraphical=2;
+                //获取color和size的数据
+//                painter.penColor=bottomTools.colorTool.data;
+            }
+            //矩形
+            rectTool.onClicked: {
+                painter.currentGraphical=3;
+            }
+            //文本
+            textTool.onClicked: {
+                Func.inputStatusChange();
+            }
+            //椭圆
+            ellipseTool.onClicked: {
+                painter.currentGraphical=5;
+            }
+            //箭头
+            arrowTool.onClicked:
+            {
+                painter.currentGraphical=6;
+            }
+            //橡皮擦
+            earseTool.onClicked:
+            {
+                //清除所有数据
+                painter.currentGraphical=0;
+                painter.clear();
+                painter.update();
+            }
+            mosaicTool.onClicked:
+            {
+                painter.currentGraphical=7;
+            }
         }
 
         BottomTools{//底部绘图工具栏
@@ -433,6 +510,12 @@ ApplicationWindow {
         id:dialogs
     }
 
-
+    Button{
+        id:save
+        text:"save"
+        onClicked: {
+            painter.save();
+        }
+    }
 
 }

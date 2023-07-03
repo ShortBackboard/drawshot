@@ -25,5 +25,6 @@
         <file>icons/drag.png</file>
         <file>icons/information.png</file>
         <file>SelectWindow.qml</file>
+        <file>icons/moasicdraw.png</file>
     </qresource>
 </RCC>

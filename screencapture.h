@@ -27,7 +27,6 @@ public:
     Q_INVOKABLE void shotActiveWin();   //活动窗口截取
 //    Q_INVOKABLE void shotIrregular();   //不规则截图
     Q_INVOKABLE void setActiveWinId();  //获取并保存系统当前活动窗口ID
-
 public:
     SelectImageProvider *provider;  //图片提供者
 

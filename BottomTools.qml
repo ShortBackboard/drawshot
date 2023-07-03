@@ -9,7 +9,7 @@ Rectangle{
     color: "#f0f0f0"
 
     property alias scaleSliderControl: slider
-
+    property alias colorTool: colordialog
     Label{
         id:labelSize
         x:10

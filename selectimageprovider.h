@@ -25,7 +25,7 @@ public:
         *size = image.size();
         return image;
     }
-
+    Q_INVOKABLE QPixmap getpixmap(){return pixmap;}
 public:
     QPixmap pixmap;
 };
