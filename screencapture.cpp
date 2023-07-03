@@ -1,3 +1,4 @@
+
 /*
  * author: wanlukuan
  * date: 2023-6-14
@@ -8,10 +9,6 @@
 #include <QScreen>
 #include <QPixmap>
 #include <QClipboard>
-#include <QRectF>
-#include <QPen>
-#include <QBrush>
-#include <QPainterPath>
 #include <QDebug>
 #include <QMainWindow>
 #include <QApplication>
@@ -65,30 +62,7 @@ void ScreenCapture::setActiveWinId()
     XCloseDisplay(display);
 }
 
-
-//自由不规则区域截取，测试。。。
-//void ScreenCapture::shotIrregular()
-//{
-//    // 定义选取框
-//    QRectF selectRect;
-
-//    // 定义画笔
-//    QPen pen;
-//    pen.setWidth(2);
-//    pen.setColor(Qt::red);
-
-//    // 定义画刷
-//    QBrush brush;
-//    brush.setColor(Qt::red);
-//    brush.setStyle(Qt::DiagCrossPattern);
-
-//    // 定义PainterPath，并画出选取框
-//    QPainterPath path;
-//    path.addRect(selectRect);
-//    painter.setPen(pen);
-//    painter.setBrush(brush);
-//    painter.drawPath(path);
-
-//    // 进行截图
-//    QPixmap screenshot = widget->grab(selectRect.toRect());
-//}
+QPixmap *ScreenCapture::getCurrentPixmap()
+{
+    return m_currentPic;
+}
