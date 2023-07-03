@@ -22,3 +22,15 @@ function setSelectImg(){
     selectWin.sImg.source = ""
     selectWin.sImg.source = "image://mypixmap/"+Math.random()
 }
+
+//改变qml端文字输入框状态
+function inputStatusChange()
+{
+    painter.currentGraphical=4;
+    textarea.text="ctrl+S保存";
+}
+function backInputInitialStatus()
+{
+    painter.currentGraphical=4;
+    textarea.text="ctrl+S保存";
+}

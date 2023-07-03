@@ -30,6 +30,10 @@ target_sources(appdrawshot
         share.h share.cpp
         arearecord.h    arearecord.cpp
 
+        paintitems.h    paintitems.cpp
+        elementgroup.h  elementgroup.cpp
+        copypaintiitems.h copypaintiitems.cpp
+
     PUBLIC
         resource.qrc
 

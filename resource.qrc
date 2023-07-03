@@ -28,5 +28,6 @@
         <file>icons/wexin.png</file>
         <file>icons/record.png</file>
         <file>SelectWindow.qml</file>
+        <file>icons/moasicdraw.png</file>
     </qresource>
 </RCC>

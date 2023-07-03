@@ -6,6 +6,7 @@
 #include "selectimageprovider.h"
 #include "share.h"//exports
 #include "arearecord.h"
+#include "paintitems.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,6 +23,7 @@ int main(int argc, char *argv[])
 
     const QUrl url(u"qrc:/drawshot/Main.qml"_qs);
 
+    qmlRegisterType<PaintedItem>("qml.Component", 1, 0, "PaintedItem");
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreationFailed,
         &app, []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
