@@ -9,7 +9,7 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "Functions.js" as Func
-import qml.Component 1.0
+import  qml.Component 1.0
 
 ApplicationWindow {
     id:root
@@ -236,10 +236,10 @@ ApplicationWindow {
                             onTriggered: {
                                 share.shareToQQ()
                             }
-//                            Shortcut {
-//                                sequence: "Ctrl+Shift+Q"
-//                                onActivated: qq.triggered()
-//                            }
+                            //                            Shortcut {
+                            //                                sequence: "Ctrl+Shift+Q"
+                            //                                onActivated: qq.triggered()
+                            //                            }
                         }
 
                         MenuItem{
@@ -488,79 +488,84 @@ ApplicationWindow {
         width: 40
         height: content.height
         border.width: 2
-            border.color: "#d6d6d6"
-            //直线
-            lineTool.onClicked: {
-                painter.currentGraphical=1;
-                //                painter.m_bEnabled=true;
-                console.log("linecurrentGraphical:"+painter.currentGraphical)
-                //                console.log("line:"+painter.m_bEnabled)
-            }
-            //涂鸦
-            penTool.onClicked: {
-                painter.currentGraphical=2;
+        border.color: "#d6d6d6"
+        //直线
+        lineTool.onClicked: {
+            painter.currentGraphical=1;
+            //                painter.m_bEnabled=true;
+            console.log("linecurrentGraphical:"+painter.currentGraphical)
+            //                console.log("line:"+painter.m_bEnabled)
+        }
+        //涂鸦
+        penTool.onClicked: {
+            painter.currentGraphical=2;
 
-            }
-            //矩形
-            rectTool.onClicked: {
-                painter.currentGraphical=3;
-            }
-            //文本
-            textTool.onClicked: {
-                Func.inputStatusChange();
-            }
-            //椭圆
-            ellipseTool.onClicked: {
-                painter.currentGraphical=5;
-            }
-            //箭头
-            arrowTool.onClicked:
-            {
-                painter.currentGraphical=6;
-            }
-            //橡皮擦
-            earseTool.onClicked:
-            {
-                //清除所有数据
-                painter.currentGraphical=0;
-                painter.clear();
-                painter.update();
-            }
-            mosaicTool.onClicked:
-            {
-                painter.currentGraphical=7;
-            }
+        }
+        //矩形
+        rectTool.onClicked: {
+            painter.currentGraphical=3;
+        }
+        //文本
+        textTool.onClicked: {
+            Func.inputStatusChange();
+        }
+        //椭圆
+        ellipseTool.onClicked: {
+            painter.currentGraphical=5;
+        }
+        //箭头
+        arrowTool.onClicked:
+        {
+            painter.currentGraphical=6;
+        }
+        //橡皮擦
+        earseTool.onClicked:
+        {
+            //清除所有数据
+            painter.currentGraphical=0;
+            painter.clear();
+            painter.update();
+        }
+        mosaicTool.onClicked:
+        {
+            painter.currentGraphical=7;
+        }
+    }
+
+    BottomTools{//底部绘图工具栏
+        id:bottomTools
+        visible: false
+        x:leftTools.width
+        width: content.width - leftTools.width
+        border.width: 3
+        border.color: "#d6d6d6"
+        anchors.bottom: content.bottom
+        height: 50
+        colorTool.onColorChanged: {
+            painter.fontColorChanged(colorTool.color);
+        }
+        fontSizeTool.onValueChanged: {
+            painter.fontSizeChanged(fontSizeTool.value);
         }
 
-        BottomTools{//底部绘图工具栏
-            id:bottomTools
-            visible: false
-            x:leftTools.width
-            width: content.width - leftTools.width
-            border.width: 3
-            border.color: "#d6d6d6"
-            anchors.bottom: content.bottom
-            height: 50
-            colorTool.onColorChanged: {
-                painter.fontColorChanged(colorTool.color);
-            }
-            fontSizeTool.onValueChanged: {
-                painter.fontSizeChanged(fontSizeTool.value);
-            }
-
-            //绑定设置scale和slider
-            scaleSliderControl.value : shotPreview.scale / 1 * 100
-            scaleSliderControl.onValueChanged: {
-                shotPreview.scale = scaleSliderControl.value / 100
-                //                console.log(shotPreview.scale)
-            }
+        //绑定设置scale和slider
+        scaleSliderControl.value : shotPreview.scale / 1 * 100
+        scaleSliderControl.onValueChanged: {
+            shotPreview.scale = scaleSliderControl.value / 100
+            //                console.log(shotPreview.scale)
         }
+    }
 
 
     Actions {
         id:actions
-        aboutAction.onTriggered: dialogs.openAboutDialog()
-        saveAction.onTriggered: painter.save();
+        aboutAction.onTriggered: dialogs.openAboutDialog();
+        saveAction.onTriggered:
+        {
+            painter.save();
+            saveImg();
+        }
+
     }
 
     Dialogs{
@@ -572,8 +577,8 @@ ApplicationWindow {
         fileSaveAsDialog.onAccepted: {//另存为
             console.log(fileSaveAsDialog.selectedFile)
             shotPreview.grabToImage(function(result) { //另外为的图片大小默认和shotPreview大小一致
-                result.saveToFile(fileSaveAsDialog.selectedFile)
-            } )
+                    result.saveToFile(fileSaveAsDialog.selectedFile)
+                } )
+            }
         }
     }
-}
