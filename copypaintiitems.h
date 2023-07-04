@@ -21,6 +21,7 @@ public:
     void saveArrowLineElement(QPainter* painter);
     void saveTextElement(QPainter* painter);
     void saveMasiocGraffitiElement(QPainter* painter);
+    QPixmap* getFinalPixmap();
     QPainter *copyPainter;
 
     //涂鸦
@@ -40,5 +41,6 @@ public:
 
     QPixmap m_pixmap;
 };
+
 
 #endif // COPYPAINTIITEMS_H

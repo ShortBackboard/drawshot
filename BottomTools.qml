@@ -9,7 +9,9 @@ Rectangle{
     color: "#f0f0f0"
 
     property alias scaleSliderControl: slider
-    property alias colorTool: colordialog
+    property alias colorTool: colorSelect
+    property alias colorToolb: colordialog
+    property alias fontSizeTool: spinBox
     Label{
         id:labelSize
         x:10
@@ -18,7 +20,9 @@ Rectangle{
     }
 
     SpinBox{
+        //size-value
         id:spinBox
+        value: 1
         x:10 + labelSize.width
         y:11
         width: 50
@@ -35,12 +39,13 @@ Rectangle{
     }
 
     Rectangle{
+        //color
         id:colorSelect
         x:205 + labelSize.width
         y:9
         height: 30
         width: 50
-        color: "#00a5ff"
+        color: "#000000"
         TapHandler{
             onTapped: {
                 colordialog.open()

@@ -18,9 +18,9 @@ class PaintedItem : public QQuickPaintedItem
 {
     Q_OBJECT
     //获取qml端的笔的size
-    Q_PROPERTY(int penWidth READ penWidth WRITE setPenWidth)
+    Q_PROPERTY(int penWidth READ getpenWidth WRITE setPenWidth)
     //获取qml端的笔的color
-    Q_PROPERTY(QColor penColor READ penColor WRITE setPenColor)
+    Q_PROPERTY(QColor penColor READ getpenColor WRITE setPenColor)
     //获取当前状态
     Q_PROPERTY(int currentGraphical  WRITE setCurrentGraphical)
     Q_PROPERTY(bool m_bEnabled READ getm_bEnabled WRITE setm_bEnabled )
@@ -56,9 +56,17 @@ signals:
     void s_textStatusChanged();
     void s_textFinishStatusChanged();
     void textEditStatusChanged();
+    //对字体的大小进行修改信号
+    Q_INVOKABLE void fontSizeChanged(int fontSize);
+    //对字体的颜色进行修改信号
+    Q_INVOKABLE void fontColorChanged(QColor color);
     //完成文本获取信号
     Q_INVOKABLE void finishGetTextString(int status,int textstatus,QString text,int fontsize);
 public slots:
+    //对字体的大小进行修改
+    Q_INVOKABLE void onFontSizeChanged(int fontSize){penWidth=fontSize;}
+    //对字体的颜色进行修改信号
+    Q_INVOKABLE void onFontColorChanged(QColor color){penColor=color;}
     //对获得的文字进行处理
     Q_INVOKABLE void onFinishGetTextString(int status,int textstatus,QString text,int fontsize);
 public:
@@ -68,11 +76,11 @@ public:
     bool getm_bEnabled() const{ return m_bEnabled;}
     void setm_bEnabled(bool b){m_bEnabled=b;}
     //设置画笔的宽度
-    int penWidth() const { return m_pen.width(); }
+    int getpenWidth() const { return m_pen.width(); }
     void setPenWidth(int width) { m_pen.setWidth(width); }
 
     //设置画笔的颜色
-    QColor penColor() const { return m_pen.color(); }
+    QColor getpenColor() const { return m_pen.color(); }
     void setPenColor(QColor color) { m_pen.setColor(color); }
 
     //设置当前的绘画模式，直线，举行，涂鸦，圆圈，矩形等
@@ -190,8 +198,8 @@ protected:
     bool m_bClicked;
 
     QPen m_pen; // the Current Pen
-    QColor m_color;//当前颜色
-
+    QColor penColor;//当前颜色
+    int penWidth; //当前的size
     //当前绘画状态
     int currentGraphical;
     //记录绘画顺序

@@ -3,7 +3,7 @@
  * date: 2023-6-14
  */
 #include "screencapture.h"
-
+#include "copypaintiitems.h"
 #include <QGuiApplication>
 #include <QScreen>
 #include <QPixmap>

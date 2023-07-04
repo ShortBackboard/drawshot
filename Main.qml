@@ -45,8 +45,6 @@ ApplicationWindow {
             content.width = root.width
             content.height = root.height - 37
 
-
-
             leftContent.width = content.width - bottomTools.height
             leftContent.height = content.height - bottomTools.height
 
@@ -423,14 +421,17 @@ ApplicationWindow {
                     property bool textSignal: false
                     id: painter
                     anchors.centerIn: shotPreview
-//                    m_width: shotPreview.width
-//                    m_height:shotPreview.height
+                    //                    m_width: shotPreview.width
+                    //                    m_height:shotPreview.height
                     width: shotPreview.width*shotPreview.scale
                     height: shotPreview.height*shotPreview.scale
-//                    display_width: shotPreview.width*shotPreview.scale
-//                    display_height: shotPreview.height*shotPreview.scale
+                    //                    display_width: shotPreview.width*shotPreview.scale
+                    //                    display_height: shotPreview.height*shotPreview.scale
                     changedScale:1*shotPreview.scale
-//                    m_pximap:
+                    penWidth: bottomTools.fontSizeTool.value
+                    penColor: bottomTools.colorTool.color
+
+                    //                    m_pximap:
                     Rectangle {
                         FocusScope {
                             id:textarea
@@ -467,26 +468,26 @@ ApplicationWindow {
 
             }
         }
-
-        RightContent{
-            id:rightContent
-            border.width: 1
-            border.color: "#eaeaea"
-            anchors.right: content.right
-            width: 315
-            height: 500
-            onSelectArea: {
-                select.winSelected.visible = true;
-                select.winSelected.showFullScreen()
-            }
+    }
+    RightContent{
+        id:rightContent
+        border.width: 1
+        border.color: "#eaeaea"
+        anchors.right: content.right
+        width: 315
+        height: 500
+        onSelectArea: {
+            select.winSelected.visible = true;
+            select.winSelected.showFullScreen()
         }
+    }
 
-        LeftTools{//左边绘图工具栏
-            id:leftTools
-            visible: false
-            width: 40
-            height: content.height
-            border.width: 2
+    LeftTools{//左边绘图工具栏
+        id:leftTools
+        visible: false
+        width: 40
+        height: content.height
+        border.width: 2
             border.color: "#d6d6d6"
             //直线
             lineTool.onClicked: {
@@ -498,8 +499,7 @@ ApplicationWindow {
             //涂鸦
             penTool.onClicked: {
                 painter.currentGraphical=2;
-                //获取color和size的数据
-//                painter.penColor=bottomTools.colorTool.data;
+
             }
             //矩形
             rectTool.onClicked: {
@@ -541,6 +541,12 @@ ApplicationWindow {
             border.color: "#d6d6d6"
             anchors.bottom: content.bottom
             height: 50
+            colorTool.onColorChanged: {
+                painter.fontColorChanged(colorTool.color);
+            }
+            fontSizeTool.onValueChanged: {
+                painter.fontSizeChanged(fontSizeTool.value);
+            }
 
             //绑定设置scale和slider
             scaleSliderControl.value : shotPreview.scale / 1 * 100
@@ -549,11 +555,12 @@ ApplicationWindow {
                 //                console.log(shotPreview.scale)
             }
         }
-    }
+
 
     Actions {
         id:actions
         aboutAction.onTriggered: dialogs.openAboutDialog()
+        saveAction.onTriggered: painter.save();
     }
 
     Dialogs{

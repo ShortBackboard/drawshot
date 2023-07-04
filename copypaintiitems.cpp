@@ -23,7 +23,7 @@ void CopyPaintiItems::save()
     saveTextElement(copyPainter);
     saveMasiocGraffitiElement(copyPainter);
     copyPainter->end();
-
+    m_pixmap.save("A.png");
 }
 
 void CopyPaintiItems::saveLineElement(QPainter *painter)
@@ -136,5 +136,10 @@ void CopyPaintiItems::saveMasiocGraffitiElement(QPainter *painter)
         }
     }
     qDebug()<<"copymasico success";
+}
+//绘画完成的pixmap
+QPixmap* CopyPaintiItems::getFinalPixmap()
+{
+    return &m_pixmap;
 }
 

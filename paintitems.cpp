@@ -7,8 +7,8 @@
 #include <QColor>
 #include <QDebug>
 #include <QPaintDevice>
-
 #include <QtMath>
+
 void PaintedItem::onFinishGetTextString(int status,int textstatus,QString text,int fontsize)
 {
     qDebug()<<"status"<<status<<textstatus<<text;
@@ -31,7 +31,10 @@ PaintedItem::PaintedItem(QQuickItem *parent)
     , m_pen(Qt::black)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
+    m_pximap.load(":/icons/test.png");
     connect(this,&PaintedItem::finishGetTextString,this,&PaintedItem::onFinishGetTextString);
+    connect(this,&PaintedItem::fontSizeChanged,this,&PaintedItem::onFontSizeChanged);
+    connect(this,&PaintedItem::fontColorChanged,this,&PaintedItem::onFontColorChanged);
 }
 
 PaintedItem::~PaintedItem()
@@ -58,8 +61,8 @@ void PaintedItem::purgePaintElements()
         m_lineElements.clear();
     }
     qDebug()<<"直线清除数据后"<<m_lineElements.size();
-     //涂鸦
-    int gsize = m_graffitiElements.size();
+        //涂鸦
+        int gsize = m_graffitiElements.size();
     if(gsize > 0)
     {
         for(int i = 0; i < gsize; ++i)
@@ -70,8 +73,8 @@ void PaintedItem::purgePaintElements()
     }
     qDebug()<<"涂鸦清除数据后"<<m_graffitiElements.size();
 
-    //矩形
-    int rsize = m_rectElements.size();
+        //矩形
+        int rsize = m_rectElements.size();
     if(rsize > 0)
     {
         for(int i = 0; i < rsize; ++i)
@@ -81,8 +84,8 @@ void PaintedItem::purgePaintElements()
         m_rectElements.clear();
     }
     qDebug()<<"矩形清除数据后"<<m_rectElements.size();
-     //文本
-    int tsize = m_textElements.size();
+        //文本
+        int tsize = m_textElements.size();
     if(tsize > 0)
     {
         for(int i = 0; i < tsize; ++i)
@@ -92,8 +95,8 @@ void PaintedItem::purgePaintElements()
         m_textElements.clear();
     }
     qDebug()<<"文本清除数据后"<<m_textElements.size();
-    //椭圆
-    int csize = m_circleElements.size();
+        //椭圆
+        int csize = m_circleElements.size();
     if(csize > 0)
     {
         for(int i = 0; i < csize; ++i)
@@ -103,8 +106,8 @@ void PaintedItem::purgePaintElements()
         m_circleElements.clear();
     }
     qDebug()<<"椭圆清除数据后"<<m_circleElements.size();
-    //箭头
-     int asize = m_arrowLineElements.size();
+        //箭头
+        int asize = m_arrowLineElements.size();
     if(asize > 0)
     {
         for(int i = 0; i < asize; ++i)
@@ -114,7 +117,7 @@ void PaintedItem::purgePaintElements()
         m_arrowLineElements.clear();
     }
     qDebug()<<"箭头清除数据后"<<m_arrowLineElements.size();
-     //马赛克
+        //马赛克
         int msize = m_masiocElements.size();
     if(msize > 0)
     {
@@ -178,10 +181,8 @@ void PaintedItem::paint(QPainter *painter)
     qDebug()<<"painting";
     painter->setRenderHint(QPainter::Antialiasing, true);
     painter->setRenderHint(QPainter::SmoothPixmapTransform, true );
-
-    m_pximap.load(":/icons/test.png");
     //画数据
-//    painter->begin(&m_pximap);
+    //painter->begin(&m_pximap);
     drawLine(painter);
     drawGraffiti(painter);
     drawRectangle(painter);
@@ -213,7 +214,7 @@ void PaintedItem::drawLine(QPainter *painter)
             painter->drawLine(element->m_startPoint,element->m_endPoint);
         }
     }
-        qDebug()<<"linfinish";
+    qDebug()<<"linfinish";
 }
 //涂鸦
 void PaintedItem::drawGraffiti(QPainter *painter)
@@ -230,22 +231,22 @@ void PaintedItem::drawGraffiti(QPainter *painter)
         //0过去，1现在
         if(element->m_status==0)
         {
-             for(int j=0;j<p_size;++j)
-             {
-                 painter->drawLine(element->m_startPoint[j]/element->m_scale*changedScale,element->m_endPoint[j]/element->m_scale*changedScale);
-             }
-             qDebug()<<"nooo当前：";
+            for(int j=0;j<p_size;++j)
+            {
+                painter->drawLine(element->m_startPoint[j]/element->m_scale*changedScale,element->m_endPoint[j]/element->m_scale*changedScale);
+            }
+            qDebug()<<"nooo当前：";
         }
         if(element->m_status==1)
         {
-             for(int j=0;j<p_size;++j)
-             {
-                 painter->drawLine(element->m_startPoint[j],element->m_endPoint[j]);
-             }
-             qDebug()<<"当前：";
+            for(int j=0;j<p_size;++j)
+            {
+                painter->drawLine(element->m_startPoint[j],element->m_endPoint[j]);
+            }
+            qDebug()<<"当前：";
         }
     }
-        qDebug()<<"GraffitiElementfinish";
+    qDebug()<<"GraffitiElementfinish";
 }
 //矩形
 void PaintedItem::drawRectangle(QPainter *painter)
@@ -259,11 +260,11 @@ void PaintedItem::drawRectangle(QPainter *painter)
         painter->setPen(element->m_pen);
         if(element->m_status==0)
         {
-             painter->drawRect(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale);
+            painter->drawRect(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale);
         }
         if(element->m_status==1)
         {
-             painter->drawRect(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
+            painter->drawRect(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
         }
     }
     qDebug()<<"rectfinish";
@@ -281,11 +282,11 @@ void PaintedItem::drawCircle(QPainter *painter)
         painter->setPen(element->m_pen);
         if(element->m_status==0)
         {
-             painter->drawEllipse(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale);
+            painter->drawEllipse(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale);
         }
         if(element->m_status==1)
         {
-             painter->drawEllipse(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
+            painter->drawEllipse(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
         }
     }
     qDebug()<<"rectfinish";
@@ -306,21 +307,21 @@ void PaintedItem::drawText(QPainter *painter)
         painter->setPen(element->m_pen);
         if(element->m_status==0&&element->m_teststatus==1)
         {
-             QFont font=painter->font();
-             font.setPixelSize(element->fontSize/element->m_scale*changedScale);
-             painter->setFont(font);
-             painter->drawText(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale,0,element->text);
-             qDebug()<<"finish input";
+            QFont font=painter->font();
+            font.setPixelSize(element->fontSize/element->m_scale*changedScale);
+            painter->setFont(font);
+            painter->drawText(element->m_startPoint.x()/element->m_scale*changedScale,element->m_startPoint.y()/element->m_scale*changedScale,element->m_width/element->m_scale*changedScale,element->m_height/element->m_scale*changedScale,0,element->text);
+            qDebug()<<"finish input";
         }
         //现在
         if(element->m_status==1)
         {
-             painter->drawRect(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
-              qDebug()<<"nofinish input";
+            painter->drawRect(element->m_startPoint.x(),element->m_startPoint.y(),element->m_width,element->m_height);
+            qDebug()<<"nofinish input";
         }
 
     }
-      qDebug()<<"textdraw";
+    qDebug()<<"textdraw";
 }
 //画箭头
 void PaintedItem::drawArrowLine(QPainter *painter)
@@ -328,40 +329,40 @@ void PaintedItem::drawArrowLine(QPainter *painter)
 
     int size=m_arrowLineElements.size();
     ArrowLineElement *element;
-      //    直线
-      for(int i = 0;i <size;++i)
-      {
+    //    直线
+    for(int i = 0;i <size;++i)
+    {
         qDebug()<<"缩放大小"<<changedScale;
-         element = m_arrowLineElements.at(i);
+                element = m_arrowLineElements.at(i);
         painter->setPen(element->m_pen);
         //status判断：0过去，1现在
         if(element->m_status==0)
         {
-              painter->drawLine(element->m_startPoint/element->m_scale*changedScale,element->m_endPoint/element->m_scale*changedScale);
-              painter->drawLine(element->m_endPoint/element->m_scale*changedScale, element->pointA/element->m_scale*changedScale); // 绘制箭头一半
-              painter->drawLine(element->m_endPoint/element->m_scale*changedScale, element->pointB/element->m_scale*changedScale); // 绘制箭头另一半
+            painter->drawLine(element->m_startPoint/element->m_scale*changedScale,element->m_endPoint/element->m_scale*changedScale);
+            painter->drawLine(element->m_endPoint/element->m_scale*changedScale, element->pointA/element->m_scale*changedScale); // 绘制箭头一半
+            painter->drawLine(element->m_endPoint/element->m_scale*changedScale, element->pointB/element->m_scale*changedScale); // 绘制箭头另一半
         }
         if(element->m_status==1)
         {
-              painter->drawLine(element->m_startPoint,element->m_endPoint);
-              painter->drawLine(element->m_endPoint, element->pointA); // 绘制箭头一半
-              painter->drawLine(element->m_endPoint, element->pointB); // 绘制箭头另一半
+            painter->drawLine(element->m_startPoint,element->m_endPoint);
+            painter->drawLine(element->m_endPoint, element->pointA); // 绘制箭头一半
+            painter->drawLine(element->m_endPoint, element->pointB); // 绘制箭头另一半
         }
     }
-      qDebug()<<"drawArrowLinefinish";
+    qDebug()<<"drawArrowLinefinish";
 }
 //对箭头数据进行处理
 void PaintedItem::calculateArrowPosition()
 {
-      double angle = atan2(m_arrowLineElement->m_endPoint.y() - m_arrowLineElement->m_startPoint.y(), m_arrowLineElement->m_endPoint.x() - m_arrowLineElement->m_startPoint.x())+ 3.1415926;
+    double angle = atan2(m_arrowLineElement->m_endPoint.y() - m_arrowLineElement->m_startPoint.y(), m_arrowLineElement->m_endPoint.x() - m_arrowLineElement->m_startPoint.x())+ 3.1415926;
 
-      m_arrowLineElement->pointA.setX(m_arrowLineElement->m_endPoint.x()+m_arrowLineElement->arrowLength*cos(angle-m_arrowLineElement->arrowDegrees));
+    m_arrowLineElement->pointA.setX(m_arrowLineElement->m_endPoint.x()+m_arrowLineElement->arrowLength*cos(angle-m_arrowLineElement->arrowDegrees));
 
-      m_arrowLineElement->pointA.setY(m_arrowLineElement->m_endPoint.y()+m_arrowLineElement->arrowLength*sin(angle-m_arrowLineElement->arrowDegrees));
+    m_arrowLineElement->pointA.setY(m_arrowLineElement->m_endPoint.y()+m_arrowLineElement->arrowLength*sin(angle-m_arrowLineElement->arrowDegrees));
 
-      m_arrowLineElement->pointB.setX(m_arrowLineElement->m_endPoint.x()+m_arrowLineElement->arrowLength*cos(angle+m_arrowLineElement->arrowDegrees));
+    m_arrowLineElement->pointB.setX(m_arrowLineElement->m_endPoint.x()+m_arrowLineElement->arrowLength*cos(angle+m_arrowLineElement->arrowDegrees));
 
-      m_arrowLineElement->pointB.setY(m_arrowLineElement->m_endPoint.y()+m_arrowLineElement->arrowLength*sin(angle+m_arrowLineElement->arrowDegrees));
+    m_arrowLineElement->pointB.setY(m_arrowLineElement->m_endPoint.y()+m_arrowLineElement->arrowLength*sin(angle+m_arrowLineElement->arrowDegrees));
 }
 //马赛克
 void PaintedItem::drawMasicLine(QPainter *painter)
@@ -378,19 +379,19 @@ void PaintedItem::drawMasicLine(QPainter *painter)
         //0过去，1现在
         if(element->m_status==0)
         {
-              for(int j=0;j<p_size;++j)
-              {
-                 painter->drawLine(element->m_startPoint[j]/element->m_scale*changedScale,element->m_endPoint[j]/element->m_scale*changedScale);
-              }
-              qDebug()<<"nooo当前：";
+            for(int j=0;j<p_size;++j)
+            {
+                painter->drawLine(element->m_startPoint[j]/element->m_scale*changedScale,element->m_endPoint[j]/element->m_scale*changedScale);
+            }
+            qDebug()<<"nooo当前：";
         }
         if(element->m_status==1)
         {
-              for(int j=0;j<p_size;++j)
-              {
-                 painter->drawLine(element->m_startPoint[j],element->m_endPoint[j]);
-              }
-              qDebug()<<"当前：";
+            for(int j=0;j<p_size;++j)
+            {
+                painter->drawLine(element->m_startPoint[j],element->m_endPoint[j]);
+            }
+            qDebug()<<"当前：";
         }
     }
 
@@ -413,14 +414,15 @@ void PaintedItem::save()
     copy->m_pixmap=m_pximap;
     copy->save();
     //在copy的save中输出图片
-    this->clear();
 }
 
 void PaintedItem::mousePressEvent(QMouseEvent *event)
 {
     m_bMoved = false;   
     m_bPressed = true;
-
+    //初始化每次画下时的笔
+    m_pen.setColor(penColor);
+    m_pen.setWidth(penWidth);
     if(!m_bEnabled || !(event->button() & acceptedMouseButtons()))
     {
         qDebug()<<"move press:"+currentGraphical;
@@ -447,7 +449,7 @@ void PaintedItem::mousePressEvent(QMouseEvent *event)
             m_lineElement->m_status=1;
 
             qDebug()<<"直线press："<<event->pos();
-            m_sequence.append(1);
+                                            m_sequence.append(1);
             break;
         }
         case 2:
