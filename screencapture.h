@@ -27,11 +27,6 @@ public:
     Q_INVOKABLE void shotActiveWin();   //活动窗口截取
 //    Q_INVOKABLE void shotIrregular();   //不规则截图
     Q_INVOKABLE void setActiveWinId();  //获取并保存系统当前活动窗口ID
-
-    Q_INVOKABLE int getCurrentPixmapWidth(){return m_currentPicWidth;} //前端调用实现数据传递
-    Q_INVOKABLE int getCurrentPixmapHeight(){return m_currentPicHeight;}
-    QPixmap *getCurrentPixmap();
-
     
 public:
     SelectImageProvider *provider;  //图片提供者

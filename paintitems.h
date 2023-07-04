@@ -26,8 +26,6 @@ class PaintedItem : public QQuickPaintedItem
     Q_PROPERTY(bool m_bEnabled READ getm_bEnabled WRITE setm_bEnabled )
 
     //保存截图的pixmap数据进行绘制
-    Q_PROPERTY( QImage s_image WRITE sets_image)
-    Q_PROPERTY( QUrl s_url  WRITE sets_url)
     Q_PROPERTY(int pixmapWidthChangeScale WRITE setpixmapWidthChangeScale)
     Q_PROPERTY(int pixmapHeightChangeScale WRITE setpixmapHeightChangeScale)
 
@@ -43,7 +41,7 @@ class PaintedItem : public QQuickPaintedItem
     Q_PROPERTY(int s_width READ gets_width WRITE sets_width NOTIFY s_widthChanged)
     Q_PROPERTY(int s_height READ gets_height WRITE sets_height NOTIFY s_heightChanged)
 
-    Q_PROPERTY(bool textEditStatus READ getTextEditStatus  NOTIFY textEditStatusChanged)
+    Q_PROPERTY(bool textEditStatus READ getTextEditStatus  WRITE setTextEditStatus NOTIFY textEditStatusChanged)
     //笔数据
     QML_ELEMENT
 signals:
@@ -87,8 +85,6 @@ public:
     void setCurrentGraphical(int cg){currentGraphical=cg;}
 
     //设置绘画的图片内容即pixmap-改变
-    void sets_image(QImage image){s_image=image;}
-    void sets_url( QUrl url){s_url=url;}
     void setpixmapWidthChangeScale(int pixmapscale){pixmapWidthChangeScale=pixmapscale;}
     void setpixmapHeightChangeScale(int pixmapscale){pixmapHeightChangeScale=pixmapscale;}
 
@@ -109,6 +105,7 @@ public:
     int gets_width(){return s_width;}
     int gets_height(){return s_height;}
     bool getTextEditStatus(){return textEditStatus;}
+    void setTextEditStatus(bool realTextEditStatus){realTextEditStatus=textEditStatus;}
 
     //清除所有
     Q_INVOKABLE void clear();
@@ -142,14 +139,10 @@ protected:
     //马赛克
     void drawMasicLine(QPainter*painter);
     //画图片
-//    void drawPixmap(QPainter *painter);
 protected:
 
 
-    //要画的图
-    QImage s_image;
-    QUrl s_url;
-
+    //要画的图的相关数据
     int pixmapWidthChangeScale;
     int pixmapHeightChangeScale;
     //缩放程度-初始化为1
@@ -189,6 +182,7 @@ protected:
     QPoint s_textPoint;
     int s_width;
     int s_height;
+
     bool textEditStatus;
     int s_textSize;
 

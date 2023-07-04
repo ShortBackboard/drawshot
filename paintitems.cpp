@@ -31,7 +31,6 @@ PaintedItem::PaintedItem(QQuickItem *parent)
     , m_pen(Qt::black)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
-    s_image.load(s_url.toString());
 
     connect(this,&PaintedItem::finishGetTextString,this,&PaintedItem::onFinishGetTextString);
     connect(this,&PaintedItem::fontSizeChanged,this,&PaintedItem::onFontSizeChanged);
@@ -408,16 +407,14 @@ void PaintedItem::save()
     copy->m_graffitiElements=m_graffitiElements;
     copy->m_arrowLineElements=m_arrowLineElements;
     copy->m_circleElements=m_circleElements;
-    copy->m_rectElements=m_circleElements;
+    copy->m_rectElements=m_rectElements;
     copy->m_textElements=m_textElements;
     copy->m_masiocElements=m_masiocElements;
-    //为完成同步绘画完再缩放的功能
+
     copy->widthScale=pixmapWidthChangeScale;
     copy->heightScale=pixmapHeightChangeScale;
-
-    copy->m_pixmap=QPixmap::fromImage(s_image);
     copy->save();
-    //在copy的save中输出图片
+
 }
 
 void PaintedItem::mousePressEvent(QMouseEvent *event)
@@ -539,9 +536,9 @@ void PaintedItem::mousePressEvent(QMouseEvent *event)
             masicBrush.setTextureImage(QImage(":/icons/moasicdraw.png"));
             QPen temp;
             temp=m_pen;
-            m_pen.setBrush(masicBrush);
+            temp.setBrush(masicBrush);
 
-            m_masiocElement = new GraffitiElement(m_pen);
+            m_masiocElement = new GraffitiElement(temp);
             m_masiocElements.append(m_masiocElement);
 
             m_startPoint=event->pos();
@@ -551,7 +548,6 @@ void PaintedItem::mousePressEvent(QMouseEvent *event)
             m_masiocElement->m_endPoint.append(m_endPoint);
             m_masiocElement->m_status=1;
 
-            m_pen=temp;
             m_sequence.append(7);
             qDebug()<<"马赛克press："<<event->pos();
                 break;

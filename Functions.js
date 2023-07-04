@@ -16,40 +16,20 @@ function cutArea(x,y,w,h){
     shotFullScreen(x+1,y+1,w-3,h-3);
     setPriImgSource();
 }
-function calculatePrmWidthChangeScale()
-{
-    var diaplayWidth;
-    var trueWidth=getCurrentPixmapWidth();
-    if(showAnnotationToolClickTimes == 0)
-    {
-        diaplayWidth=leftContent.width;
-    }
-    return diaplayWidth/trueWidth;
-}
-function calculatePrmHeightChangeScale()
-{
-    var diaplayHeight;
-    var trueHeight=getCurrentPixmapHeight();
-    if(showAnnotationToolClickTimes == 0)
-    {
-        diaplayHeight=leftContent.height;
-    }
-    return diaplayHeight/trueHeight;
-}
 //加载备截取截图
 function setSelectImg(){
     selectWin.sImg.source = ""
     selectWin.sImg.source = "image://mypixmap/"+Math.random()
 }
-
-//改变qml端文字输入框状态
 function inputStatusChange()
 {
+    painter.textEditStatus=false;
     painter.currentGraphical=4;
-    textarea.text="ctrl+S保存";
+    input.visible=true;
 }
-function backInputInitialStatus()
+function backinputStatusChange()
 {
-    painter.currentGraphical=4;
-    textarea.text="ctrl+S保存";
+        painter.currentGraphical=4;
+    painter.textEditStatus=false;
+        input.visible=true;
 }

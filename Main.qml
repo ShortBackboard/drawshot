@@ -188,12 +188,18 @@ ApplicationWindow {
                 id:undoActionButton
                 action:actions.undoAction
                 visible: false
+                onClicked: {
+                    painter.undo();
+                }
             }
 
             ToolButton{
                 id:redoActionButton
                 action:actions.redoAction
                 visible: false
+                onClicked: {
+                    painter.undo();
+                }
             }
 
             ToolButton{
@@ -279,9 +285,7 @@ ApplicationWindow {
                         leftContent.height = content.height - bottomTools.height
 
                         rowAppToolBar.spacing = (root.width - 7 * 79) / 22
-//                        leftRec.height = leftContent.height
-//                        leftRec.width = leftContent.width
-
+//
 
                         //redo undo 显示
                         undoActionButton.visible = true
@@ -298,7 +302,6 @@ ApplicationWindow {
                         leftRec.enabled = true
                         imageWheel.enabled = true
                         shotPreview.fillMode=Image.Stretch;
-
 
                         //切换到绘画界面默认放大图片,移动图片的x,y]
                         shotPreview.scale *= 1
@@ -426,12 +429,12 @@ ApplicationWindow {
                     width: shotPreview.width*shotPreview.scale
                     height: shotPreview.height*shotPreview.scale
 
-                    pixmapWidthChangeScale:Func.calculatePrmWidthChangeScale()
-                    pixmapHeightChangeScale:Func.calculatePrmWidthChangeScale()
+                    pixmapWidthChangeScale:shotPreview.width
+                    pixmapHeightChangeScale:shotPreview.height
                     changedScale:1*shotPreview.scale
                     penWidth: bottomTools.fontSizeTool.value
                     penColor: bottomTools.colorTool.color
-                    s_url:shotPreview.source
+
                     Rectangle {
                         FocusScope {
                             id:textarea
@@ -450,12 +453,13 @@ ApplicationWindow {
                                 anchors.margins: 4
                                 text: "ctrl+S保存"
                                 focus: true
+                                visible: false;
                                 color: bottomTools.colorTool.color
                                 Keys.onPressed:function(event){
                                     if (event.modifiers == Qt.ControlModifier && event.key == Qt.Key_S)
                                     {
                                         painter.finishGetTextString(0,1,input.text,input.font.pixelSize);
-                                        backInputInitialStatus();
+                                        Func.backinputStatusChange();
                                     }
                                 }
                             }
@@ -492,10 +496,7 @@ ApplicationWindow {
         border.color: "#d6d6d6"
         //直线
         lineTool.onClicked: {
-            painter.currentGraphical=1;
-            //                painter.m_bEnabled=true;
-            console.log("linecurrentGraphical:"+painter.currentGraphical)
-            //                console.log("line:"+painter.m_bEnabled)
+            painter.currentGraphical=1;    
         }
         //涂鸦
         penTool.onClicked: {
@@ -529,6 +530,7 @@ ApplicationWindow {
         }
         mosaicTool.onClicked:
         {
+            //涂鸦
             painter.currentGraphical=7;
         }
     }
@@ -554,7 +556,6 @@ ApplicationWindow {
         scaleSliderControl.value : shotPreview.scale / 1 * 100
         scaleSliderControl.onValueChanged: {
             shotPreview.scale = scaleSliderControl.value / 100
-            //                console.log(shotPreview.scale)
         }
     }
 
@@ -565,7 +566,6 @@ ApplicationWindow {
         saveAction.onTriggered:
         {
             painter.save();
-            saveImg();
         }
 
     }

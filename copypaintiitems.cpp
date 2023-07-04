@@ -11,6 +11,12 @@ CopyPaintiItems::CopyPaintiItems()
 
 void CopyPaintiItems::save()
 {
+    //测试函数
+    m_pixmap.load("temp.png");
+    int tempw=m_pixmap.width();
+    int temph=m_pixmap.height();
+
+    m_pixmap=m_pixmap.scaled(widthScale,heightScale,Qt::IgnoreAspectRatio,Qt::FastTransformation);
     copyPainter=new QPainter(&m_pixmap);
     //设置为混合绘制
     copyPainter->setRenderHint(QPainter::Antialiasing,true);
@@ -23,8 +29,10 @@ void CopyPaintiItems::save()
     saveTextElement(copyPainter);
     saveMasiocGraffitiElement(copyPainter);
     copyPainter->end();
-    //得到默认图片绘画后的pixmap
-    m_pixmap.scaled(m_pixmap.width()/widthScale,m_pixmap.height()/heightScale);
+
+    m_pixmap=m_pixmap.scaled(tempw,temph,Qt::IgnoreAspectRatio,Qt::FastTransformation);
+    m_pixmap.save("B.PNG");
+    qDebug()<<"1111qqqqq";
 }
 
 void CopyPaintiItems::saveLineElement(QPainter *painter)
@@ -128,7 +136,6 @@ void CopyPaintiItems::saveMasiocGraffitiElement(QPainter *painter)
     for(int i = 0;i <size;++i)
     {
         element = m_masiocElements.at(i);
-        element->m_pen.setWidth(20/element->m_scale);
         painter->setPen(element->m_pen);
         int p_size=element->m_startPoint.size();
         for(int j=0;j<p_size;++j)

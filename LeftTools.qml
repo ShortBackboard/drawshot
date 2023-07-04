@@ -88,7 +88,7 @@ Rectangle{
         id:earseButton
         x:5
         y:5 + 2 * 35
-        icon.source: "qrc:/icons/paint.png"
+        icon.source: "qrc:/icons/clear.png"
         width: 30
         height: 30
         highlighted: earseButton.hovered?true:false
