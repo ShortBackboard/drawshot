@@ -14,7 +14,7 @@
 class QScreen;
 class QPixmap;
 class QClipboard;
-
+class CopyPaintiItems;
 class ScreenCapture: public QObject
 {
     Q_OBJECT
@@ -27,7 +27,11 @@ public:
     Q_INVOKABLE void shotActiveWin();   //活动窗口截取
 //    Q_INVOKABLE void shotIrregular();   //不规则截图
     Q_INVOKABLE void setActiveWinId();  //获取并保存系统当前活动窗口ID
+
+    Q_INVOKABLE int getCurrentPixmapWidth(){return m_currentPicWidth;} //前端调用实现数据传递
+    Q_INVOKABLE int getCurrentPixmapHeight(){return m_currentPicHeight;}
     QPixmap *getCurrentPixmap();
+
     
 public:
     SelectImageProvider *provider;  //图片提供者
@@ -36,6 +40,8 @@ private:
     QScreen *m_screen;  //当前屏幕
     QClipboard *m_clipBoard;    //剪贴板
     QPixmap *m_currentPic;  //当前的截图
+    int m_currentPicWidth; //当前截图的宽
+    int m_currentPicHeight; //当前截图的高
     WId winId;   //当前活动窗口ID
 };
 

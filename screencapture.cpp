@@ -29,6 +29,8 @@ void ScreenCapture::shotFullScreen()
     m_clipBoard->setPixmap(screenshot);  //保存到剪贴板
     provider->pixmap = screenshot;  //设置图片提供者资源
     m_currentPic = &screenshot;     //保存当前图片，为支持‘保存’功能
+    m_currentPicWidth=m_currentPic->width(); //保存共享当前的图片数据
+    m_currentPicHeight=m_currentPic->height(); //保存共享当前的图片数据
 }
 
 void ScreenCapture::shotFullScreen(int x, int y, int w, int h)
@@ -39,6 +41,8 @@ void ScreenCapture::shotFullScreen(int x, int y, int w, int h)
     m_clipBoard->setPixmap(screenshot);  //保存到剪贴板
     provider->pixmap = screenshot;  //设置图片提供者资源
     m_currentPic = &screenshot;     //保存当前图片，为支持‘保存’功能
+    m_currentPicWidth=m_currentPic->width(); //保存共享当前的图片数据
+    m_currentPicHeight=m_currentPic->height(); //保存共享当前的图片数据
 }
 
 void ScreenCapture::shotActiveWin()
@@ -48,6 +52,8 @@ void ScreenCapture::shotActiveWin()
     m_clipBoard = QGuiApplication::clipboard();    //调用系统剪贴板
     m_clipBoard->setPixmap(pixmap);  //保存到剪贴板
     provider->pixmap = pixmap;  //设置图片提供者资源
+    m_currentPicWidth=m_currentPic->width(); //保存共享当前的图片数据
+    m_currentPicHeight=m_currentPic->height(); //保存共享当前的图片数据
 }
 
 //获取系统活动窗口ID并保存

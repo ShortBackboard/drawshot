@@ -274,11 +274,13 @@ ApplicationWindow {
                 onClicked: {
                     if(showAnnotationToolClickTimes == 0){
                         rightContent.visible = false
+
                         leftContent.width = content.width - 50
                         leftContent.height = content.height - bottomTools.height
+
                         rowAppToolBar.spacing = (root.width - 7 * 79) / 22
-                        leftRec.height = leftContent.height
-                        leftRec.width = leftContent.width
+//                        leftRec.height = leftContent.height
+//                        leftRec.width = leftContent.width
 
 
                         //redo undo 显示
@@ -295,7 +297,7 @@ ApplicationWindow {
                         //设置滑动条以及缩放
                         leftRec.enabled = true
                         imageWheel.enabled = true
-
+                        shotPreview.fillMode=Image.Stretch;
 
 
                         //切换到绘画界面默认放大图片,移动图片的x,y]
@@ -306,8 +308,10 @@ ApplicationWindow {
                         leftContent.x = 0
                         leftContent.width = content.width / 3  * 2
                         leftContent.height = content.height
-                        leftRec.width = leftContent.width
-                        leftRec.height = leftContent.height / 4 * 3
+//没有意义
+//                        leftRec.width = leftContent.width
+//                        leftRec.height = leftContent.height
+
                         leftRec.anchors.centerIn = leftContent
                         rowAppToolBar.spacing = (root.width - 7 * 79) / 12
 
@@ -326,7 +330,7 @@ ApplicationWindow {
                         //设置滑动条以及缩放
                         leftRec.enabled = false
                         imageWheel.enabled = false
-
+                        shotPreview.fillMode=Image.PreserveAspectFit;
                         //返回主界面恢复默认大小
                         shotPreview.scale = 1
 
@@ -373,21 +377,18 @@ ApplicationWindow {
             border.color: "#eaeaea"
             width: content.width - rightContent.width
             height: content.height
-
-
             ScrollView{//可滚动的图片区域
                 id:leftRec
                 enabled: false //初始界面禁止不可滑动
                 clip: false
+                anchors.fill: parent
                 Image {
                     id:shotPreview
-                    //                    width: leftRec.width
-                    //                    height: leftRec.height
                     anchors.fill: parent
                     source:"qrc:/icons/test.png"
-                    fillMode: Image.PreserveAspectFit   //等比例显示图片
                     focus: false
                     clip: true
+                    fillMode:Image.PreserveAspectFit;
                     WheelHandler{//滑轮放大缩小处理
                         id:imageWheel
                         enabled: false //初始界面禁止缩放
@@ -421,17 +422,16 @@ ApplicationWindow {
                     property bool textSignal: false
                     id: painter
                     anchors.centerIn: shotPreview
-                    //                    m_width: shotPreview.width
-                    //                    m_height:shotPreview.height
+
                     width: shotPreview.width*shotPreview.scale
                     height: shotPreview.height*shotPreview.scale
-                    //                    display_width: shotPreview.width*shotPreview.scale
-                    //                    display_height: shotPreview.height*shotPreview.scale
+
+                    pixmapWidthChangeScale:Func.calculatePrmWidthChangeScale()
+                    pixmapHeightChangeScale:Func.calculatePrmWidthChangeScale()
                     changedScale:1*shotPreview.scale
                     penWidth: bottomTools.fontSizeTool.value
                     penColor: bottomTools.colorTool.color
-
-                    //                    m_pximap:
+                    s_url:shotPreview.source
                     Rectangle {
                         FocusScope {
                             id:textarea
@@ -450,6 +450,7 @@ ApplicationWindow {
                                 anchors.margins: 4
                                 text: "ctrl+S保存"
                                 focus: true
+                                color: bottomTools.colorTool.color
                                 Keys.onPressed:function(event){
                                     if (event.modifiers == Qt.ControlModifier && event.key == Qt.Key_S)
                                     {
@@ -531,6 +532,7 @@ ApplicationWindow {
             painter.currentGraphical=7;
         }
     }
+
 
     BottomTools{//底部绘图工具栏
         id:bottomTools

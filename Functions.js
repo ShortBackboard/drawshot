@@ -16,7 +16,26 @@ function cutArea(x,y,w,h){
     shotFullScreen(x+1,y+1,w-3,h-3);
     setPriImgSource();
 }
-
+function calculatePrmWidthChangeScale()
+{
+    var diaplayWidth;
+    var trueWidth=getCurrentPixmapWidth();
+    if(showAnnotationToolClickTimes == 0)
+    {
+        diaplayWidth=leftContent.width;
+    }
+    return diaplayWidth/trueWidth;
+}
+function calculatePrmHeightChangeScale()
+{
+    var diaplayHeight;
+    var trueHeight=getCurrentPixmapHeight();
+    if(showAnnotationToolClickTimes == 0)
+    {
+        diaplayHeight=leftContent.height;
+    }
+    return diaplayHeight/trueHeight;
+}
 //加载备截取截图
 function setSelectImg(){
     selectWin.sImg.source = ""

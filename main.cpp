@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     Share *share = new Share;
     AreaRecord *arearecord = new AreaRecord;
     QQmlApplicationEngine engine;
+
     engine.rootContext()->setContextObject(&sc);
     engine.rootContext()->setContextProperty("share",share);
     engine.rootContext()->setContextProperty("arearecort",arearecord);

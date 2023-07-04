@@ -23,7 +23,8 @@ void CopyPaintiItems::save()
     saveTextElement(copyPainter);
     saveMasiocGraffitiElement(copyPainter);
     copyPainter->end();
-    m_pixmap.save("A.png");
+    //得到默认图片绘画后的pixmap
+    m_pixmap.scaled(m_pixmap.width()/widthScale,m_pixmap.height()/heightScale);
 }
 
 void CopyPaintiItems::saveLineElement(QPainter *painter)

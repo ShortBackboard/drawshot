@@ -26,13 +26,13 @@ class PaintedItem : public QQuickPaintedItem
     Q_PROPERTY(bool m_bEnabled READ getm_bEnabled WRITE setm_bEnabled )
 
     //保存截图的pixmap数据进行绘制
-    Q_PROPERTY(QPixmap m_pximap  WRITE setm_pximap)
+    Q_PROPERTY( QImage s_image WRITE sets_image)
+    Q_PROPERTY( QUrl s_url  WRITE sets_url)
+    Q_PROPERTY(int pixmapWidthChangeScale WRITE setpixmapWidthChangeScale)
+    Q_PROPERTY(int pixmapHeightChangeScale WRITE setpixmapHeightChangeScale)
 
-//    Q_PROPERTY(int m_width  WRITE setm_width)
-//    Q_PROPERTY(int m_height  WRITE setm_height)
-//    Q_PROPERTY(int display_width  WRITE setdisplay_width)
-//    Q_PROPERTY(int display_height  WRITE setdisplay_height)
     Q_PROPERTY(float changedScale READ getChangeScale WRITE setChangedScale)
+
 
     //文字相关的共享数据
     Q_PROPERTY(int s_textStatus WRITE sets_textStatus NOTIFY s_textStatusChanged)
@@ -87,7 +87,10 @@ public:
     void setCurrentGraphical(int cg){currentGraphical=cg;}
 
     //设置绘画的图片内容即pixmap-改变
-    void setm_pximap(QPixmap pximap){m_pximap=pximap;}
+    void sets_image(QImage image){s_image=image;}
+    void sets_url( QUrl url){s_url=url;}
+    void setpixmapWidthChangeScale(int pixmapscale){pixmapWidthChangeScale=pixmapscale;}
+    void setpixmapHeightChangeScale(int pixmapscale){pixmapHeightChangeScale=pixmapscale;}
 
     //缩放
     void setChangedScale(float qreal){changedScale=qreal;}
@@ -144,9 +147,11 @@ protected:
 
 
     //要画的图
-    QPixmap m_pximap;
-//    //实现缩放,缩放程度
+    QImage s_image;
+    QUrl s_url;
 
+    int pixmapWidthChangeScale;
+    int pixmapHeightChangeScale;
     //缩放程度-初始化为1
     float changedScale=1;
 

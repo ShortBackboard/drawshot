@@ -31,7 +31,8 @@ PaintedItem::PaintedItem(QQuickItem *parent)
     , m_pen(Qt::black)
 {
     setAcceptedMouseButtons(Qt::LeftButton);
-    m_pximap.load(":/icons/test.png");
+    s_image.load(s_url.toString());
+
     connect(this,&PaintedItem::finishGetTextString,this,&PaintedItem::onFinishGetTextString);
     connect(this,&PaintedItem::fontSizeChanged,this,&PaintedItem::onFontSizeChanged);
     connect(this,&PaintedItem::fontColorChanged,this,&PaintedItem::onFontColorChanged);
@@ -373,7 +374,6 @@ void PaintedItem::drawMasicLine(QPainter *painter)
     {
         element = m_masiocElements.at(i);
 
-        element->m_pen.setWidth(20/element->m_scale*changedScale);
         painter->setPen(element->m_pen);
         int p_size=element->m_startPoint.size();
         //0过去，1现在
@@ -411,7 +411,11 @@ void PaintedItem::save()
     copy->m_rectElements=m_circleElements;
     copy->m_textElements=m_textElements;
     copy->m_masiocElements=m_masiocElements;
-    copy->m_pixmap=m_pximap;
+    //为完成同步绘画完再缩放的功能
+    copy->widthScale=pixmapWidthChangeScale;
+    copy->heightScale=pixmapHeightChangeScale;
+
+    copy->m_pixmap=QPixmap::fromImage(s_image);
     copy->save();
     //在copy的save中输出图片
 }
@@ -423,6 +427,7 @@ void PaintedItem::mousePressEvent(QMouseEvent *event)
     //初始化每次画下时的笔
     m_pen.setColor(penColor);
     m_pen.setWidth(penWidth);
+
     if(!m_bEnabled || !(event->button() & acceptedMouseButtons()))
     {
         qDebug()<<"move press:"+currentGraphical;
@@ -535,7 +540,6 @@ void PaintedItem::mousePressEvent(QMouseEvent *event)
             QPen temp;
             temp=m_pen;
             m_pen.setBrush(masicBrush);
-            m_pen.setWidth(15);
 
             m_masiocElement = new GraffitiElement(m_pen);
             m_masiocElements.append(m_masiocElement);

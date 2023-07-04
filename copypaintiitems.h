@@ -40,6 +40,9 @@ public:
     QVector <GraffitiElement*> m_masiocElements;
 
     QPixmap m_pixmap;
+
+    int widthScale;
+    int heightScale;
 };
 
 
