@@ -4,6 +4,7 @@
 #include <QIODevice>
 #include <QFile>
 #include <QBuffer>
+#include <QDateTime>
 
 CopyPaintiItems::CopyPaintiItems()
 {
@@ -13,6 +14,7 @@ void CopyPaintiItems::save()
 {
     //测试函数
     m_pixmap.load("temp.png");
+
     int tempw=m_pixmap.width();
     int temph=m_pixmap.height();
 
@@ -31,8 +33,8 @@ void CopyPaintiItems::save()
     copyPainter->end();
 
     m_pixmap=m_pixmap.scaled(tempw,temph,Qt::IgnoreAspectRatio,Qt::FastTransformation);
-    m_pixmap.save("B.PNG");
-    qDebug()<<"1111qqqqq";
+
+    m_pixmap.save("/root/Drawshot_"+getCurrentDateInfo()+".PNG");
 }
 
 void CopyPaintiItems::saveLineElement(QPainter *painter)
@@ -145,9 +147,16 @@ void CopyPaintiItems::saveMasiocGraffitiElement(QPainter *painter)
     }
     qDebug()<<"copymasico success";
 }
-//绘画完成的pixmap
-QPixmap* CopyPaintiItems::getFinalPixmap()
+
+QString CopyPaintiItems::getCurrentDateInfo()
 {
-    return &m_pixmap;
+    QDateTime dt = QDateTime::currentDateTime();
+    QString dtInfo = dt.toString("yyyyMMdd_hhmmss");
+    return dtInfo;
 }
+////绘画完成的pixmap
+//QPixmap* CopyPaintiItems::getFinalPixmap()
+//{
+//    return &m_pixmap;
+//}
 

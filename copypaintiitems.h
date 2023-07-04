@@ -21,7 +21,7 @@ public:
     void saveArrowLineElement(QPainter* painter);
     void saveTextElement(QPainter* painter);
     void saveMasiocGraffitiElement(QPainter* painter);
-    QPixmap* getFinalPixmap();
+    QString getCurrentDateInfo();
     QPainter *copyPainter;
 
     //涂鸦
